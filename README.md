@@ -1,98 +1,72 @@
-# NgneatDag
+<p align="center">
+ <img width="20%" height="20%" src="./logo.svg">
+</p>
 
-This project was generated using [Nx](https://nx.dev).
+<br />
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+[![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)]()
+[![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)]()
+[![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+[![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
+[![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+> The Library Slogan
 
-## Quick Start & Documentation
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ipsam iste iure, maxime modi molestiae nihil obcaecati odit officiis pariatur quibusdam suscipit temporibus unde.
+Accusantium aliquid corporis cupiditate dolores eum exercitationem illo iure laborum minus nihil numquam odit officiis possimus quas quasi quos similique, temporibus veritatis? Exercitationem, iure magni nulla quo sapiente soluta. Esse?
 
-[Nx Documentation](https://nx.dev/angular)
+## Features
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+- ✅ One
+- ✅ Two
+- ✅ Three
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+## Table of Contents
 
-## Adding capabilities to your workspace
+- [Installation](#installation)
+- [Usage](#usage)
+- [FAQ](#faq)
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+## Installation
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+### NPM
 
-Below are our core plugins:
+`npm install @scope/dag --save-dev`
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+### Yarn
 
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
+`yarn add @scope/dag --dev`
 
-## Generate an application
+## Usage
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ipsam iste iure, maxime modi molestiae nihil obcaecati odit officiis pariatur quibusdam suscipit temporibus unde.
 
-> You can use any of the plugins above to generate applications as well.
+```ts
+function helloWorld() {}
+```
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+## FAQ
 
-## Generate a library
+## How to ...
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ips
 
-> You can also use any of the plugins above to generate libraries as well.
+## Contributors ✨
 
-Libraries are sharable across libraries and applications. They can be imported from `@ngneat-dag/mylib`.
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-## Development server
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
 
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-## Code scaffolding
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-Run `ng g component my-component --project=my-app` to generate a new component.
+## Logo Attribution
 
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
-
-## ☁ Nx Cloud
-
-### Computation Memoization in the Cloud
-
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+<div>Logo made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
