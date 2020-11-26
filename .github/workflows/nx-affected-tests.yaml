@@ -3,6 +3,8 @@ name: Nx Affected CI Tests
 on:
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**.md'
 
 env:
   NX_BRANCH: ${{ github.event.number }}
