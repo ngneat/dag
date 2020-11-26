@@ -347,6 +347,21 @@ export class DagManagerService<T extends DagModelItem> {
     this.dagModelBs.next(dagModel);
   }
 
+  addNewStepAsNewPath(
+    parentId: number,
+    numberOfChildren: number,
+    genericFields: Omit<T, keyof DagModelItem>
+  ): void {
+    const updatedItems: Array<T> = this.addItemAsNewPath(
+      parentId,
+      this.getSingleDimensionalArrayFromModel(),
+      numberOfChildren,
+      genericFields
+    );
+    const dagModel = this.convertArrayToDagModel(updatedItems);
+    this.dagModelBs.next(dagModel);
+  }
+
   removeStep(idToRemove: number): void {
     const updatedItems: Array<T> = this.removeItem(
       idToRemove,
