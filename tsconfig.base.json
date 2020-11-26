@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ngneat/dag": ["libs/dag-manager-service/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

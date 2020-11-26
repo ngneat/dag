@@ -1,7 +1,7 @@
 {
   "npmScope": "ngneat-dag",
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "implicitDependencies": {
     "angular.json": "*",
@@ -19,12 +19,7 @@
       "runner": "@nrwl/nx-cloud",
       "options": {
         "accessToken": "MTJmYzg4ZDMtZDI0MC00ZjUxLTgzNzAtNDZlYTkxMTY0MzdhfHJlYWQtd3JpdGU=",
-        "cacheableOperations": [
-          "build",
-          "test",
-          "lint",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
         "showUsageWarnings": true
       }
@@ -36,9 +31,10 @@
     },
     "ngneat-dag-demo-e2e": {
       "tags": [],
-      "implicitDependencies": [
-        "ngneat-dag-demo"
-      ]
+      "implicitDependencies": ["ngneat-dag-demo"]
+    },
+    "dag-manager-service": {
+      "tags": ["scope:lib", "type:util"]
     }
   }
 }

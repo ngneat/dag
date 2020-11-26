@@ -1,0 +1,32 @@
+name: Nx Affected CI Tests
+
+on:
+  pull_request:
+    branches: [main]
+
+env:
+  NX_BRANCH: ${{ github.event.number }}
+  NX_RUN_GROUP: ${{ github.run_id }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+
+    steps:
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: git fetch origin main
+      - name: npm install
+        run: npm install
+      - name: Run Affected Unit Tests
+        shell: bash
+        run: npm run affected:test -- --base=remotes/origin/main
