@@ -316,9 +316,21 @@ The easiest way to remove an item is, again, the `removeStep` method because you
 
 ## FAQ
 
-## How to ...
+### Question: How do I display the DAG model?
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid assumenda atque blanditiis cum delectus eligendi ips
+Answer: The easiest way to display the DAG model is to use the `async` pipe to subscribe to the `dagModel$` observable and to use two `*ngFor` loops, one nested inside the other. The DAG model is a two dimensional array of items. The first for loop allows you to loop over rows of the model, and the second for loop displays the columns. Here's an example:
+
+```html
+<div class="flex row" *ngFor="let wf of workflow$ | async">
+  <app-box *ngFor="let wfs of wf">
+    {{ wfs.stepId }}
+  </app-box>
+</div>
+```
+
+### Question: How do I show that two items are connected?
+
+Answer: There are many ways to do this, but the simplest is to use a library that draws an SVG line between two HTML elements. [leader-line](https://www.npmjs.com/package/leader-line) is a library that does just that. It is well documented and easy to use.
 
 ## Contributors ✨
 

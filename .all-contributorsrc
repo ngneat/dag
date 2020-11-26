@@ -1,10 +1,11 @@
 {
   "projectName": "dag",
-  "projectOwner": "@scope",
+  "projectOwner": "@ngneat",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
-    "README.md"
+    "README.md",
+    "libs/dag-manager-service/README.md"
   ],
   "imageSize": 100,
   "commit": true,
