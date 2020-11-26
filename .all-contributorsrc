@@ -1,6 +1,6 @@
 {
   "projectName": "dag",
-  "projectOwner": "@ngneat",
+  "projectOwner": "ngneat",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
@@ -10,6 +10,18 @@
   "imageSize": 100,
   "commit": true,
   "commitConvention": "angular",
-  "contributors": [],
-  "contributorsPerLine": 7
+  "contributors": [
+    {
+      "login": "pjlamb12",
+      "name": "Preston Lamb",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2006222?v=4",
+      "profile": "http://www.prestonlamb.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
