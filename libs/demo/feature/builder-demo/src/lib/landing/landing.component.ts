@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DagManagerService, DagModelItem } from '@ngneat/dag';
 import { Observable } from 'rxjs';
 
-interface WorkflowItem extends DagModelItem {
+export interface WorkflowItem extends DagModelItem {
   name: string;
 }
 
@@ -24,5 +24,19 @@ export class LandingComponent implements OnInit {
     this._dagManager.setNextNumber(2);
     this._dagManager.setNewItemsArrayAsDagModel(this.startingItems);
     this.workflow$ = this._dagManager.dagModel$;
+  }
+
+  addItem({
+    parentIds,
+    numberOfChildren,
+  }: {
+    parentIds: number[];
+    numberOfChildren: number;
+  }) {
+    this._dagManager.addNewStep(parentIds, numberOfChildren, 1, { name: '' });
+  }
+
+  removeItem({ stepId }: { stepId: number }) {
+    this._dagManager.removeStep(stepId);
   }
 }

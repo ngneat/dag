@@ -1,0 +1,29 @@
+<div
+  class="h-48 w-48 bg-red-300 flex flex-col items-center justify-center p-2 mx-4"
+>
+  <p class="text-red-700 text-center text-xl">Step {{ item.stepId }}</p>
+  <select
+    [(ngModel)]="numberOfChildren"
+    name="numberOfChildren"
+    id="numberOfChildren"
+    class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+  >
+    <option value="0"># of Children</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+  <button
+    class="w-full flex items-center justify-center px-3 py-1 border border-transparent text-base font-medium rounded-md text-red-400 bg-white hover:bg-gray-50 transition duration-300 mb-2 mt-2"
+    [disabled]="numberOfChildren === 0"
+    (click)="addChildren()"
+  >
+    Add Children
+  </button>
+  <button
+    class="w-full flex items-center justify-center px-3 py-1 border border-transparent text-base font-medium rounded-md text-red-400 bg-white hover:bg-gray-50 transition duration-300"
+    (click)="removeThisItem()"
+  >
+    Remove Node
+  </button>
+</div>
