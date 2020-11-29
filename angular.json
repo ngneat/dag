@@ -13,8 +13,9 @@
       "prefix": "ngneat-dag",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "ngx-build-plus:browser",
           "options": {
+            "extraWebpackConfig": "webpack.config.js",
             "outputPath": "dist/apps/ngneat-dag-demo",
             "index": "apps/ngneat-dag-demo/src/index.html",
             "main": "apps/ngneat-dag-demo/src/main.ts",
@@ -60,8 +61,9 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "ngx-build-plus:dev-server",
           "options": {
+            "extraWebpackConfig": "webpack.config.js",
             "browserTarget": "ngneat-dag-demo:build"
           },
           "configurations": {
