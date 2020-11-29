@@ -182,6 +182,32 @@
           "style": "scss"
         }
       }
+    },
+    "demo-feature-home": {
+      "projectType": "library",
+      "root": "libs/demo/feature/home",
+      "sourceRoot": "libs/demo/feature/home/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/demo/feature/home/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/demo/feature/home/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

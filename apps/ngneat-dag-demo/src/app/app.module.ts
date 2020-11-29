@@ -7,7 +7,19 @@ import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, SharedUiComponentsModule, RouterModule.forRoot([])],
+  imports: [
+    BrowserModule,
+    SharedUiComponentsModule,
+    RouterModule.forRoot([
+      {
+        path: '',
+        loadChildren: () =>
+          import('@ngneat-dag/demo/feature/home').then(
+            (module) => module.DemoFeatureHomeModule
+          ),
+      },
+    ]),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

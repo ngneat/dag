@@ -38,6 +38,9 @@
     },
     "shared-ui-components": {
       "tags": ["scope:shared", "type:ui"]
+    },
+    "demo-feature-home": {
+      "tags": ["scope:demo", "type:feature"]
     }
   }
 }
