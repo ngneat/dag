@@ -156,6 +156,32 @@
           "style": "scss"
         }
       }
+    },
+    "shared-ui-components": {
+      "projectType": "library",
+      "root": "libs/shared/ui/components",
+      "sourceRoot": "libs/shared/ui/components/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/ui/components/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/ui/components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

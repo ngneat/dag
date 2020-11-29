@@ -16,7 +16,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ngneat/dag": ["libs/dag-manager-service/src/index.ts"]
+      "@ngneat/dag": ["libs/dag-manager-service/src/index.ts"],
+      "@ngneat-dag/shared/ui/components": [
+        "libs/shared/ui/components/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
