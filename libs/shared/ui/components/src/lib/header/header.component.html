@@ -20,9 +20,18 @@
           <a
             routerLink="/"
             routerLinkActive="border-red-300"
+            [routerLinkActiveOptions]="{ exact: true }"
             class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-900"
           >
             Home
+          </a>
+          <a
+            routerLink="/demo"
+            routerLinkActive="border-red-300"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-900"
+          >
+            Live Demo
           </a>
         </div>
       </div>
@@ -89,9 +98,14 @@
   <div [class.block]="menuOpen" [class.hidden]="!menuOpen" class="sm:hidden">
     <div class="pt-2 pb-3 space-y-1">
       <a
-        href="#"
+        routerLink="/"
         class="block pl-3 pr-4 py-2 border-l-4 border-red-400 text-base font-medium text-red-700 bg-red-50"
         >Home</a
+      >
+      <a
+        routerLink="/demo"
+        class="block pl-3 pr-4 py-2 border-l-4 border-red-400 text-base font-medium text-red-700 bg-red-50"
+        >Live Demo</a
       >
     </div>
   </div>

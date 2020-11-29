@@ -18,6 +18,13 @@ import { AppComponent } from './app.component';
             (module) => module.DemoFeatureHomeModule
           ),
       },
+      {
+        path: 'demo',
+        loadChildren: () =>
+          import('@ngneat-dag/demo/feature/builder-demo').then(
+            (module) => module.DemoFeatureBuilderDemoModule
+          ),
+      },
     ]),
   ],
   providers: [],

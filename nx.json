@@ -41,6 +41,9 @@
     },
     "demo-feature-home": {
       "tags": ["scope:demo", "type:feature"]
+    },
+    "demo-feature-builder-demo": {
+      "tags": ["scope:demo", "type:feature"]
     }
   }
 }

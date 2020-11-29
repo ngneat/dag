@@ -208,6 +208,32 @@
           "style": "scss"
         }
       }
+    },
+    "demo-feature-builder-demo": {
+      "projectType": "library",
+      "root": "libs/demo/feature/builder-demo",
+      "sourceRoot": "libs/demo/feature/builder-demo/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/demo/feature/builder-demo/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/demo/feature/builder-demo/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {
