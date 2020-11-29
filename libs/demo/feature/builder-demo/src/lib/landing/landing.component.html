@@ -9,6 +9,7 @@
   >
     <div class="mt-4 flex justify-between items-center" *ngFor="let col of row">
       <ngneat-dag-node
+        #boxes
         [item]="col"
         (addItem)="addItem($event)"
         (removeItem)="removeItem($event)"

@@ -48,6 +48,7 @@
     "@angular/router": "^10.1.0",
     "@ngneat/lib": "^1.0.5",
     "@nrwl/angular": "10.3.3",
+    "leader-line": "^1.0.5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.2"

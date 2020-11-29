@@ -27,7 +27,7 @@
               "apps/ngneat-dag-demo/src/assets"
             ],
             "styles": ["apps/ngneat-dag-demo/src/styles.scss"],
-            "scripts": []
+            "scripts": ["node_modules/leader-line/leader-line.min.js"]
           },
           "configurations": {
             "production": {
