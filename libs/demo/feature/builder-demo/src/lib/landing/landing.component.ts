@@ -99,7 +99,6 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
     parentIds: number[];
     numberOfChildren: number;
   }) {
-    console.log(parentIds, numberOfChildren);
     this._dagManager.addNewStep(parentIds, numberOfChildren, 1, { name: '' });
   }
 
