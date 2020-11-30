@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChildren,
@@ -21,7 +22,7 @@ export interface WorkflowItem extends DagModelItem {
   styleUrls: ['./landing.component.scss'],
   providers: [DagManagerService],
 })
-export class LandingComponent implements OnInit, AfterViewInit {
+export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('boxes', { read: ElementRef }) boxes: QueryList<ElementRef>;
   private startingItems: WorkflowItem[] = [
     { name: 'Step 1', stepId: 1, parentIds: [0], branchPath: 1 },
@@ -35,6 +36,10 @@ export class LandingComponent implements OnInit, AfterViewInit {
     this._dagManager.setNextNumber(2);
     this._dagManager.setNewItemsArrayAsDagModel(this.startingItems);
     this.workflow$ = this._dagManager.dagModel$;
+  }
+
+  ngOnDestroy() {
+    this.removeLines();
   }
 
   ngAfterViewInit() {
@@ -52,7 +57,6 @@ export class LandingComponent implements OnInit, AfterViewInit {
 
   drawLines() {
     const boxItems = this._dagManager.getSingleDimensionalArrayFromModel();
-    console.log('boxItems:', boxItems);
 
     boxItems.forEach((box: WorkflowItem) => {
       box.parentIds.forEach((parentId: number) => {
@@ -71,6 +75,7 @@ export class LandingComponent implements OnInit, AfterViewInit {
                 startSocket: 'bottom',
                 endSocket: 'top',
                 endPlug: 'behind',
+                color: '#444',
               }
             );
 
