@@ -1,6 +1,7 @@
 {
   "name": "@ngneat/dag",
   "version": "0.0.1",
+  "homepage": "https://ngneat-dag-demo.netlify.app/",
   "peerDependencies": {
     "@angular/common": "^10.1.6",
     "@angular/core": "^10.1.6"
