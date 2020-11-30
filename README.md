@@ -11,6 +11,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
 [![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
 [![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4fa06315-60c7-489b-844c-1c7b32dcfbe9/deploy-status)](https://app.netlify.com/sites/ngneat-dag-demo/deploys)
 
 @ngneat/dag is designed to assist in creating and managing a [directed acycylic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) model in an Angular application. You can think of a DAG as a workflow where a user adds steps and based on given criteria continues on to the next step or steps. With this library, you can add or remove steps to the DAG and the model will be properly updated. With this part of the workflow being managed by the service, you can focus on what the workflow does rather than how to let the user build it.
 
@@ -347,6 +348,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
