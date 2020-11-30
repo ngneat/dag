@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { DagManagerService, DagModelItem } from '@ngneat/dag';
 import { Observable } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 
 declare let LeaderLine: any;
 
@@ -29,6 +30,7 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
   private linesArr = [];
   public workflow$: Observable<WorkflowItem[][]>;
+  public boxItemsLength$: Observable<number>;
 
   constructor(private _dagManager: DagManagerService<WorkflowItem>) {}
 
@@ -43,6 +45,10 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    this.boxItemsLength$ = this.boxes.changes.pipe(
+      delay(0),
+      map((list: QueryList<ElementRef>) => list.toArray().length)
+    );
     this.boxes.changes.subscribe((list) => {
       this.removeLines();
       this.drawLines();
@@ -93,6 +99,7 @@ export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
     parentIds: number[];
     numberOfChildren: number;
   }) {
+    console.log(parentIds, numberOfChildren);
     this._dagManager.addNewStep(parentIds, numberOfChildren, 1, { name: '' });
   }
 
