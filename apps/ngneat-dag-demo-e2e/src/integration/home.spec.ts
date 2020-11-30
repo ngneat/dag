@@ -1,4 +1,4 @@
-describe('Demo Homepage', () => {
+describe('Demo App Homepage', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should have the library description and action buttons', () => {

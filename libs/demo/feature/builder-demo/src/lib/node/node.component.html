@@ -15,6 +15,7 @@
     <option value="3">3</option>
   </select>
   <button
+    data-cy="add-children-button"
     class="w-full flex items-center justify-center px-3 py-1 border border-transparent text-base font-medium rounded-md text-red-400 bg-white hover:bg-gray-50 transition duration-300 mb-2 mt-2"
     [disabled]="numberOfChildren === 0"
     (click)="addChildren()"
@@ -22,6 +23,7 @@
     Add Children
   </button>
   <button
+    data-cy="remove-node-button"
     class="w-full flex items-center justify-center px-3 py-1 border border-transparent text-base font-medium rounded-md text-red-400 bg-white hover:bg-gray-50 transition duration-300"
     (click)="removeThisItem()"
   >
