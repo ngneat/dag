@@ -35,6 +35,15 @@
     },
     "dag-manager-service": {
       "tags": ["scope:lib", "type:util"]
+    },
+    "shared-ui-components": {
+      "tags": ["scope:shared", "type:ui"]
+    },
+    "demo-feature-home": {
+      "tags": ["scope:demo", "type:feature"]
+    },
+    "demo-feature-builder-demo": {
+      "tags": ["scope:demo", "type:feature"]
     }
   }
 }

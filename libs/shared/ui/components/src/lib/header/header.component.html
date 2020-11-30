@@ -1,0 +1,112 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<nav class="bg-white shadow relative z-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex">
+        <div class="flex items-center">
+          <a
+            class="flex-shrink-0 flex items-center cursor-pointer"
+            routerLink="/"
+          >
+            <img
+              class="block h-8 w-auto"
+              src="/assets/images/logo.svg"
+              alt="Workflow"
+            />
+            <p class="ml-3 font-semibold text-2xl">@ngneat/dag</p>
+          </a>
+        </div>
+        <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+          <a
+            routerLink="/"
+            routerLinkActive="border-red-300"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-900"
+          >
+            Home
+          </a>
+          <a
+            routerLink="/demo"
+            routerLinkActive="border-red-300"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-900"
+          >
+            Live Demo
+          </a>
+        </div>
+      </div>
+      <div class="-mr-2 flex items-center sm:hidden">
+        <!-- Mobile menu button -->
+        <button
+          class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-red-300"
+          aria-expanded="false"
+          (click)="menuOpen = !menuOpen"
+        >
+          <span class="sr-only">Open main menu</span>
+          <!-- Icon when menu is closed. -->
+          <!--
+            Heroicon name: menu
+
+            Menu open: "hidden", Menu closed: "block"
+          -->
+          <svg
+            class="block h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+          <!-- Icon when menu is open. -->
+          <!--
+            Heroicon name: x
+
+            Menu open: "block", Menu closed: "hidden"
+          -->
+          <svg
+            class="hidden h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    Mobile menu, toggle classes based on menu state.
+
+    Menu open: "block", Menu closed: "hidden"
+  -->
+  <div [class.block]="menuOpen" [class.hidden]="!menuOpen" class="sm:hidden">
+    <div class="pt-2 pb-3 space-y-1">
+      <a
+        routerLink="/"
+        class="block pl-3 pr-4 py-2 border-l-4 border-red-400 text-base font-medium text-red-700 bg-red-50"
+        >Home</a
+      >
+      <a
+        routerLink="/demo"
+        class="block pl-3 pr-4 py-2 border-l-4 border-red-400 text-base font-medium text-red-700 bg-red-50"
+        >Live Demo</a
+      >
+    </div>
+  </div>
+</nav>
