@@ -542,4 +542,22 @@ describe('DagManagerService', () => {
     expect(result4).toBe(false);
     expect(result5).toBe(true);
   });
+
+  it('should return the proper number of children for a given node', () => {
+    const items = [
+      { branchPath: 1, name: 'Step 1', parentIds: [0], stepId: 1 },
+      { branchPath: 1, name: 'Step 2', parentIds: [1], stepId: 2 },
+      { branchPath: 2, name: 'Step 3', parentIds: [1], stepId: 3 },
+      { branchPath: 1, name: 'Step 4', parentIds: [2], stepId: 4 },
+      { branchPath: 2, name: 'Step 5', parentIds: [2], stepId: 5 },
+      { branchPath: 1, name: 'Step 6', parentIds: [5, 3], stepId: 6 },
+    ];
+    service.setNewItemsArrayAsDagModel(items);
+
+    const result1 = service.nodeChildrenCount(1);
+    expect(result1).toBe(2);
+
+    const result3 = service.nodeChildrenCount(3);
+    expect(result3).toBe(1);
+  });
 });

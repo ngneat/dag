@@ -371,4 +371,10 @@ export class DagManagerService<T extends DagModelItem> {
     const dagModel = this.convertArrayToDagModel(updatedItems);
     this.dagModelBs.next(dagModel);
   }
+
+  nodeChildrenCount(stepId: number) {
+    const items: Array<T> = this.getSingleDimensionalArrayFromModel();
+    const childCount = items.filter((i) => i.parentIds.includes(stepId)).length;
+    return childCount;
+  }
 }
