@@ -2,6 +2,28 @@
   "name": "@ngneat/dag",
   "version": "0.0.1",
   "homepage": "https://ngneat-dag-demo.netlify.app/",
+  "description": "An Angular service for managing directed acyclic graphs",
+  "bugs": {
+    "url": "https://github.com/ngneat/dag/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngneat/dag"
+  },
+  "keywords": [
+    "angular",
+    "dag",
+    "directed acyclic graph",
+    "workflow",
+    "workflows",
+    "workflow builder"
+  ],
+  "author": {
+    "name": "Preston Lamb",
+    "email": "preston.j.lamb@gmail.com",
+    "url": "https://www.prestonlamb.com"
+  },
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^10.1.6",
     "@angular/core": "^10.1.6"
