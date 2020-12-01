@@ -24,7 +24,8 @@
             "aot": true,
             "assets": [
               "apps/ngneat-dag-demo/src/favicon.ico",
-              "apps/ngneat-dag-demo/src/assets"
+              "apps/ngneat-dag-demo/src/assets",
+              "apps/ngneat-dag-demo/src/_redirects"
             ],
             "styles": ["apps/ngneat-dag-demo/src/styles.scss"],
             "scripts": ["node_modules/leader-line/leader-line.min.js"]
