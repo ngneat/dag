@@ -315,6 +315,14 @@ The `removeItem` method takes three arguments. The first is the `stepId` for the
 
 The easiest way to remove an item is, again, the `removeStep` method because you only need to know the `stepId` that should be removed, and the service handles the rest.
 
+### Getting Children Count for a Node
+
+Sometimes your UI may need to know if a specific node has children and/or how many children it has. In those situations, you can use the `nodeChildrenCount` method. You provide a `stepId`, and it returns a number representing how many children nodes that node has.
+
+```ts
+const numberOfChildren = this._dagManager.nodeChildrenCount(1);
+```
+
 ## FAQ
 
 ### Question: How do I display the DAG model?
