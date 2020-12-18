@@ -594,4 +594,34 @@ describe('DagManagerService', () => {
       );
     }
   });
+
+  /* ***************************************************************************
+		1			|			1
+	2		3		|		4		3
+					|		2
+	**************************************************************************** */
+  it('should insert a node between two others', () => {
+    const items: Array<TestDagModel> = [
+      { branchPath: 1, name: 'Step 1', parentIds: [0], stepId: 1 },
+      { branchPath: 1, name: 'Step 2', parentIds: [1], stepId: 2 },
+      { branchPath: 2, name: 'Step 3', parentIds: [1], stepId: 3 },
+    ];
+    service.setNextNumber(4);
+    service.setNewItemsArrayAsDagModel(items);
+
+    const updated = service.insertNode(2, {
+      branchPath: null,
+      name: 'Step 4',
+      parentIds: [],
+      stepId: null,
+    });
+    console.log(JSON.stringify(updated, null, 2));
+
+    expect(updated).toStrictEqual([
+      { branchPath: 1, name: 'Step 1', parentIds: [0], stepId: 1 },
+      { branchPath: 1, name: 'Step 2', parentIds: [4], stepId: 2 },
+      { branchPath: 2, name: 'Step 3', parentIds: [1], stepId: 3 },
+      { branchPath: 1, name: 'Step 4', parentIds: [1], stepId: 4 },
+    ]);
+  });
 });
