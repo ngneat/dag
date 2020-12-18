@@ -409,4 +409,26 @@ export class DagManagerService<T extends DagModelItem> {
       throw new Error(e);
     }
   }
+
+  insertNode(idOfNodeToReplace: number, newNode: T): Array<T> {
+    const items = this.getSingleDimensionalArrayFromModel();
+    newNode.stepId = this.nextStepNumber++;
+
+    const itemToReplace = items.find((i: T) => i.stepId === idOfNodeToReplace);
+
+    newNode.branchPath = itemToReplace.branchPath;
+    newNode.parentIds = [...itemToReplace.parentIds];
+    itemToReplace.parentIds = [newNode.stepId];
+    itemToReplace.branchPath = 1;
+
+    items.push(newNode);
+
+    return items;
+  }
+
+  insertNewNode(idOfNodeToReplace: number, newNode: T): void {
+    const items = this.insertNode(idOfNodeToReplace, newNode);
+    const newDagModel = this.convertArrayToDagModel(items);
+    this.dagModelBs.next(newDagModel);
+  }
 }
