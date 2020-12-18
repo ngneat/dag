@@ -329,6 +329,47 @@ Sometimes your UI may need to know if a specific node has children and/or how ma
 const numberOfChildren = this._dagManager.nodeChildrenCount(1);
 ```
 
+### Adding Relation Between Two Nodes
+
+Sometimes you may need to add a new relationship between two nodes. For example, if the graph branches and then needs to merge again into a single path. That graph may look like this:
+
+```
+   1
+2     3
+   4
+```
+
+Where 1 branches to 2 and 3, and then 2 and 3 merge back to 4. When you first added step 4, maybe you only added step 2 as a parent but you now need to add step 3 as a parent as well. The `addRelation` and `addNewRelation` methods will do this for you. `addNewRelation` adds the relation (if possible) and then updates the observable for you. `addRelation` adds the relation and then returns the single dimensional array of items. Here's an example:
+
+```ts
+//  This will update the dagModel$ observable
+addRelationForChildNode(childNodeId: number, parentNodeId: number) {
+	try{
+		this._dagManager.addNewRelation(childNodeId, parentNodeId);
+	} catch(err) {
+		// handle error
+	}
+}
+
+//  This will add it to the array and return the array
+addRelationForChildNode(childNodeId: number, parentNodeId: number) {
+	try{
+		const newItems = this._dagManager.addRelation(childNodeId, parentNodeId);
+	} catch(err) {
+		// handle error
+	}
+}
+```
+
+You cannot add a relationship between nodes if:
+
+- The two nodes are already parent/child
+- The two nodes are siblings
+- The child node is a direct descendent (grandchild, etc) of the parent node
+- The child node is higher in the graph than the parent node
+
+If you are trying to add a relationship and get an error, then this is likely why. You should likely wrap your code in `try/catch` as noted above because the function will throw an error if it can't add the relation.
+
 ## FAQ
 
 ### Question: How do I display the DAG model?
