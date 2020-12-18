@@ -409,4 +409,47 @@ export class DagManagerService<T extends DagModelItem> {
       throw new Error(e);
     }
   }
+
+  insertNode(idOfNodeThatMoves: number, newNode: T): Array<T> {
+    const items = this.getSingleDimensionalArrayFromModel();
+    newNode.stepId = this.nextStepNumber++;
+
+    const itemToReplace = items.find((i: T) => i.stepId === idOfNodeThatMoves);
+
+    newNode.branchPath = itemToReplace.branchPath;
+    newNode.parentIds = [...itemToReplace.parentIds];
+    itemToReplace.parentIds = [newNode.stepId];
+    itemToReplace.branchPath = 1;
+
+    items.push(newNode);
+
+    return items;
+  }
+
+  insertNewNode(idOfNodeToReplace: number, newNode: T): void {
+    const items = this.insertNode(idOfNodeToReplace, newNode);
+    const newDagModel = this.convertArrayToDagModel(items);
+    this.dagModelBs.next(newDagModel);
+  }
+
+  insertNodeAndRemoveOld(idOfNodeToReplace: number, newNode: T) {
+    const itemsWithInserted = this.insertNode(idOfNodeToReplace, newNode);
+    const itemsAfterDeleted = this.removeItem(
+      idOfNodeToReplace,
+      itemsWithInserted
+    );
+
+    return itemsAfterDeleted;
+  }
+
+  insertNewNodeAndRemoveOld(idOfNodeToReplace: number, newNode: T) {
+    const itemsWithInserted = this.insertNode(idOfNodeToReplace, newNode);
+    const itemsAfterDeleted = this.removeItem(
+      idOfNodeToReplace,
+      itemsWithInserted
+    );
+
+    const newDagModel = this.convertArrayToDagModel(itemsAfterDeleted);
+    this.dagModelBs.next(newDagModel);
+  }
 }
