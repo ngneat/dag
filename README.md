@@ -344,14 +344,31 @@ Where 1 branches to 2 and 3, and then 2 and 3 merge back to 4. When you first ad
 ```ts
 //  This will update the dagModel$ observable
 addRelationForChildNode(childNodeId: number, parentNodeId: number) {
-	this._dagManager.addNewRelation(childNodeId, parentNodeId);
+	try{
+		this._dagManager.addNewRelation(childNodeId, parentNodeId);
+	} catch(err) {
+		// handle error
+	}
 }
 
 //  This will add it to the array and return the array
 addRelationForChildNode(childNodeId: number, parentNodeId: number) {
-	const newItems = this._dagManager.addRelation(childNodeId, parentNodeId);
+	try{
+		const newItems = this._dagManager.addRelation(childNodeId, parentNodeId);
+	} catch(err) {
+		// handle error
+	}
 }
 ```
+
+You cannot add a relationship between nodes if:
+
+- The two nodes are already parent/child
+- The two nodes are siblings
+- The child node is a direct descendent (grandchild, etc) of the parent node
+- The child node is higher in the graph than the parent node
+
+If you are trying to add a relationship and get an error, then this is likely why. You should likely wrap your code in `try/catch` as noted above because the function will throw an error if it can't add the relation.
 
 ## FAQ
 
