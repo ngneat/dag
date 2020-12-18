@@ -520,28 +520,28 @@ describe('DagManagerService', () => {
     expect(result3).toBe(false);
   });
 
-  //   it('should return if a relationship can be added between two nodes', () => {
-  //     const items = [
-  //       { branchPath: 1, name: 'Step 1', parentIds: [0], stepId: 1 },
-  //       { branchPath: 1, name: 'Step 2', parentIds: [1], stepId: 2 },
-  //       { branchPath: 2, name: 'Step 3', parentIds: [1], stepId: 3 },
-  //       { branchPath: 1, name: 'Step 4', parentIds: [2], stepId: 4 },
-  //       { branchPath: 2, name: 'Step 5', parentIds: [2], stepId: 5 },
-  //       { branchPath: 1, name: 'Step 6', parentIds: [5, 3], stepId: 6 },
-  //     ];
+  it('should return if a relationship can be added between two nodes', () => {
+    const items = [
+      { branchPath: 1, name: 'Step 1', parentIds: [0], stepId: 1 },
+      { branchPath: 1, name: 'Step 2', parentIds: [1], stepId: 2 },
+      { branchPath: 2, name: 'Step 3', parentIds: [1], stepId: 3 },
+      { branchPath: 1, name: 'Step 4', parentIds: [2], stepId: 4 },
+      { branchPath: 2, name: 'Step 5', parentIds: [2], stepId: 5 },
+      { branchPath: 1, name: 'Step 6', parentIds: [5, 3], stepId: 6 },
+    ];
 
-  //     const result1 = service.canAddRelation(6, 4, items);
-  //     const result2 = service.canAddRelation(5, 4, items);
-  //     const result3 = service.canAddRelation(6, 1, items);
-  //     const result4 = service.canAddRelation(6, 3, items);
-  //     const result5 = service.canAddRelation(5, 3, items);
+    const result1 = service.canAddRelation(6, 4, items);
+    const result2 = service.canAddRelation(5, 4, items);
+    const result3 = service.canAddRelation(6, 1, items);
+    const result4 = service.canAddRelation(6, 3, items);
+    const result5 = service.canAddRelation(5, 3, items);
 
-  //     expect(result1).toBe(true);
-  //     expect(result2).toBe(false);
-  //     expect(result3).toBe(false);
-  //     expect(result4).toBe(false);
-  //     expect(result5).toBe(true);
-  //   });
+    expect(result1).toBe(true);
+    expect(result2).toBe(false);
+    expect(result3).toBe(false);
+    expect(result4).toBe(false);
+    expect(result5).toBe(true);
+  });
 
   it('should return the proper number of children for a given node', () => {
     const items = [
