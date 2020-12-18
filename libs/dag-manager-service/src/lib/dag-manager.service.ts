@@ -242,6 +242,7 @@ export class DagManagerService<T extends DagModelItem> {
   canAddRelation(childId: number, parentId: number, items: Array<T>) {
     const childItem: T = items.find((item: T) => item.stepId === childId);
     const parentItem: T = items.find((item: T) => item.stepId === parentId);
+
     if (!childItem || !parentItem) {
       return false;
     }
@@ -272,10 +273,13 @@ export class DagManagerService<T extends DagModelItem> {
       items
     );
 
+    // child has no current parent IDs
+    const noCurrentParentIds = childItem.parentIds.length === 0;
+
     return (
       !isAlreadyChild &&
       !nodesAreSiblings &&
-      childIsDeeper &&
+      (childIsDeeper || noCurrentParentIds) &&
       !circularDependency
     );
   }
@@ -376,5 +380,33 @@ export class DagManagerService<T extends DagModelItem> {
     const items: Array<T> = this.getSingleDimensionalArrayFromModel();
     const childCount = items.filter((i) => i.parentIds.includes(stepId)).length;
     return childCount;
+  }
+
+  addRelation(childId: number, parentId: number): Array<T> {
+    const items: Array<T> = this.getSingleDimensionalArrayFromModel();
+    const canAddRelation = this.canAddRelation(childId, parentId, items);
+
+    if (canAddRelation) {
+      const idx: number = items.findIndex((i: T) => i.stepId === childId);
+      items[idx].parentIds.push(parentId);
+      return [...items];
+    } else {
+      console.error(
+        `DagManagerService error: Cannot add parent ID ${parentId} to child ${childId}`
+      );
+      throw new Error(
+        `DagManagerService error: Cannot add parent ID ${parentId} to child ${childId}`
+      );
+    }
+  }
+
+  addNewRelation(childId: number, parentId: number): void {
+    try {
+      const items = this.addRelation(childId, parentId);
+      const newDagModel = this.convertArrayToDagModel(items);
+      this.dagModelBs.next(newDagModel);
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 }
