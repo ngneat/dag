@@ -1,6 +1,6 @@
 {
   "name": "@ngneat/dag",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "homepage": "https://ngneat-dag-demo.netlify.app/",
   "description": "An Angular service for managing directed acyclic graphs",
   "bugs": {
