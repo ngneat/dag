@@ -370,6 +370,32 @@ You cannot add a relationship between nodes if:
 
 If you are trying to add a relationship and get an error, then this is likely why. You should likely wrap your code in `try/catch` as noted above because the function will throw an error if it can't add the relation.
 
+### Inserting Nodes at a Specific Point in the Graph
+
+There are times where you need to insert a new node at a specific point in the graph. Sometimes that insert should push resulting items down, and sometimes it replaces the node that is at that current position. There are methods to support both of these situations.
+
+To insert a node at a specific point and push other items down, use the `insertNode` and `insertNewNode` methods. `insertNode` returns a new single dimension array of items, and `insertNewNode` just updates the observable. You just need to provide the ID of the item that's being replaced, and an object that represents the new item. You don't need to set `stepId`, `parentIds`, or `branchPath` as the method will set those for you.
+
+```ts
+// This method inserts the item, but doesn't replace item with stepId of 2, and returns the array
+const updatedItems = service.insertNode(2, {
+  branchPath: null,
+  name: 'Step 4',
+  parentIds: [],
+  stepId: null,
+});
+
+// This method inserts the item, but doesn't replace item with stepId of 2, and updates the observable
+service.insertNewNode(2, {
+  branchPath: null,
+  name: 'Step 4',
+  parentIds: [],
+  stepId: null,
+});
+```
+
+The methods that insert an item at a specific place in the graph and replace the item that was already there work the same way, and you call them the same way. The names of the methods are `insertNodeAndRemoveOld` and `insertNewNodeAndRemoveOld`.
+
 ## FAQ
 
 ### Question: How do I display the DAG model?
