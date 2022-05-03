@@ -1,9 +1,99 @@
 {
-  "cli": {
-    "analytics": "5151f9df-50f6-4a59-824c-c63d4338a56f"
-  },
   "version": 1,
   "projects": {
+    "dag-manager-service": {
+      "projectType": "library",
+      "root": "libs/dag-manager-service",
+      "sourceRoot": "libs/dag-manager-service/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/dag-manager-service/tsconfig.lib.json",
+            "project": "libs/dag-manager-service/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/dag-manager-service/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/dag-manager-service/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/dag-manager-service/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/dag-manager-service"]
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "demo-feature-builder-demo": {
+      "projectType": "library",
+      "root": "libs/demo/feature/builder-demo",
+      "sourceRoot": "libs/demo/feature/builder-demo/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/demo/feature/builder-demo/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/demo/feature/builder-demo/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/demo/feature/builder-demo"]
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "demo-feature-home": {
+      "projectType": "library",
+      "root": "libs/demo/feature/home",
+      "sourceRoot": "libs/demo/feature/home/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/demo/feature/home/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/demo/feature/home/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/demo/feature/home"]
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
     "ngneat-dag-demo": {
       "projectType": "application",
       "schematics": {
@@ -23,14 +113,19 @@
             "main": "apps/ngneat-dag-demo/src/main.ts",
             "polyfills": "apps/ngneat-dag-demo/src/polyfills.ts",
             "tsConfig": "apps/ngneat-dag-demo/tsconfig.app.json",
-            "aot": true,
             "assets": [
               "apps/ngneat-dag-demo/src/favicon.ico",
               "apps/ngneat-dag-demo/src/assets",
               "apps/ngneat-dag-demo/src/_redirects"
             ],
             "styles": ["apps/ngneat-dag-demo/src/styles.scss"],
-            "scripts": ["node_modules/leader-line/leader-line.min.js"]
+            "scripts": ["node_modules/leader-line/leader-line.min.js"],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
           },
           "configurations": {
             "production": {
@@ -61,7 +156,8 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": ["{options.outputPath}"],
+          "defaultConfiguration": ""
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -132,45 +228,6 @@
         }
       }
     },
-    "dag-manager-service": {
-      "projectType": "library",
-      "root": "libs/dag-manager-service",
-      "sourceRoot": "libs/dag-manager-service/src",
-      "prefix": "ngneat-dag",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "options": {
-            "tsConfig": "libs/dag-manager-service/tsconfig.lib.json",
-            "project": "libs/dag-manager-service/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/dag-manager-service/tsconfig.lib.prod.json"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/dag-manager-service/src/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/dag-manager-service/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/dag-manager-service"]
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
     "shared-ui-components": {
       "projectType": "library",
       "root": "libs/shared/ui/components",
@@ -190,60 +247,6 @@
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/shared/ui/components"]
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "demo-feature-home": {
-      "projectType": "library",
-      "root": "libs/demo/feature/home",
-      "sourceRoot": "libs/demo/feature/home/src",
-      "prefix": "ngneat-dag",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/demo/feature/home/src/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/demo/feature/home/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/demo/feature/home"]
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "demo-feature-builder-demo": {
-      "projectType": "library",
-      "root": "libs/demo/feature/builder-demo",
-      "sourceRoot": "libs/demo/feature/builder-demo/src",
-      "prefix": "ngneat-dag",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/demo/feature/builder-demo/src/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/demo/feature/builder-demo/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/demo/feature/builder-demo"]
         }
       },
       "schematics": {

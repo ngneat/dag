@@ -16,14 +16,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ngneat/dag": ["libs/dag-manager-service/src/index.ts"],
+      "@ngneat-dag/demo/feature/builder-demo": [
+        "libs/demo/feature/builder-demo/src/index.ts"
+      ],
+      "@ngneat-dag/demo/feature/home": ["libs/demo/feature/home/src/index.ts"],
       "@ngneat-dag/shared/ui/components": [
         "libs/shared/ui/components/src/index.ts"
       ],
-      "@ngneat-dag/demo/feature/home": ["libs/demo/feature/home/src/index.ts"],
-      "@ngneat-dag/demo/feature/builder-demo": [
-        "libs/demo/feature/builder-demo/src/index.ts"
-      ]
+      "@ngneat/dag": ["libs/dag-manager-service/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
