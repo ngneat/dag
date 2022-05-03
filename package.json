@@ -88,6 +88,7 @@
     "git-cz": "^3.2.1",
     "husky": "^3.0.1",
     "jest": "27.5.1",
+    "jest-environment-jsdom": "^27.5.1",
     "jest-preset-angular": "11.1.1",
     "lint-staged": "^9.2.0",
     "ng-packagr": "13.3.1",
