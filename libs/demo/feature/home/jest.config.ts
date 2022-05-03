@@ -1,6 +1,6 @@
 module.exports = {
-  displayName: 'dag-manager-service',
-  preset: '../../jest.preset.js',
+  displayName: 'demo-feature-home',
+
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -9,11 +9,15 @@ module.exports = {
       tsconfig: '<rootDir>/tsconfig.spec.json',
     },
   },
-  coverageDirectory: '../../coverage/libs/dag-manager-service',
+  coverageDirectory: '../../../../coverage/libs/demo/feature/home',
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',
     'jest-preset-angular/build/serializers/html-comment',
   ],
-  transform: { '^.+\\.(ts|js|html)$': 'jest-preset-angular' },
+  transform: {
+    '^.+.(ts|mjs|js|html)$': 'jest-preset-angular',
+  },
+  transformIgnorePatterns: ['node_modules/(?!.*.mjs$)'],
+  preset: '../../../../jest.preset.ts',
 };

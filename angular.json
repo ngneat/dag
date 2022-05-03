@@ -28,7 +28,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/dag-manager-service/jest.config.js",
+            "jestConfig": "libs/dag-manager-service/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/dag-manager-service"]
@@ -38,7 +38,8 @@
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "tags": ["scope:lib", "type:util"]
     },
     "demo-feature-builder-demo": {
       "projectType": "library",
@@ -55,7 +56,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/demo/feature/builder-demo/jest.config.js",
+            "jestConfig": "libs/demo/feature/builder-demo/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/demo/feature/builder-demo"]
@@ -65,7 +66,8 @@
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "tags": ["scope:demo", "type:feature"]
     },
     "demo-feature-home": {
       "projectType": "library",
@@ -82,7 +84,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/demo/feature/home/jest.config.js",
+            "jestConfig": "libs/demo/feature/home/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/demo/feature/home"]
@@ -92,7 +94,8 @@
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "tags": ["scope:demo", "type:feature"]
     },
     "ngneat-dag-demo": {
       "projectType": "application",
@@ -185,7 +188,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/ngneat-dag-demo/jest.config.js",
+            "jestConfig": "apps/ngneat-dag-demo/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/ngneat-dag-demo"]
@@ -200,7 +203,8 @@
             ]
           }
         }
-      }
+      },
+      "tags": []
     },
     "ngneat-dag-demo-e2e": {
       "root": "apps/ngneat-dag-demo-e2e",
@@ -226,7 +230,9 @@
             "lintFilePatterns": ["apps/ngneat-dag-demo-e2e/**/*.{js,ts}"]
           }
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["ngneat-dag-demo"]
     },
     "shared-ui-components": {
       "projectType": "library",
@@ -243,7 +249,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared/ui/components/jest.config.js",
+            "jestConfig": "libs/shared/ui/components/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/shared/ui/components"]
@@ -253,7 +259,8 @@
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "tags": ["scope:shared", "type:ui"]
     }
   }
 }

@@ -21,29 +21,9 @@
         "accessToken": "MTJmYzg4ZDMtZDI0MC00ZjUxLTgzNzAtNDZlYTkxMTY0MzdhfHJlYWQtd3JpdGU=",
         "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
-        "showUsageWarnings": true
+        "showUsageWarnings": true,
+        "parallel": 1
       }
-    }
-  },
-  "projects": {
-    "dag-manager-service": {
-      "tags": ["scope:lib", "type:util"]
-    },
-    "demo-feature-builder-demo": {
-      "tags": ["scope:demo", "type:feature"]
-    },
-    "demo-feature-home": {
-      "tags": ["scope:demo", "type:feature"]
-    },
-    "ngneat-dag-demo": {
-      "tags": []
-    },
-    "ngneat-dag-demo-e2e": {
-      "tags": [],
-      "implicitDependencies": ["ngneat-dag-demo"]
-    },
-    "shared-ui-components": {
-      "tags": ["scope:shared", "type:ui"]
     }
   },
   "cli": {
