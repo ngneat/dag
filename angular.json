@@ -1,135 +1,6 @@
 {
   "version": 1,
   "projects": {
-    "ngneat-dag-demo": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "apps/ngneat-dag-demo",
-      "sourceRoot": "apps/ngneat-dag-demo/src",
-      "prefix": "ngneat-dag",
-      "architect": {
-        "build": {
-          "builder": "ngx-build-plus:browser",
-          "options": {
-            "extraWebpackConfig": "webpack.config.js",
-            "outputPath": "dist/apps/ngneat-dag-demo",
-            "index": "apps/ngneat-dag-demo/src/index.html",
-            "main": "apps/ngneat-dag-demo/src/main.ts",
-            "polyfills": "apps/ngneat-dag-demo/src/polyfills.ts",
-            "tsConfig": "apps/ngneat-dag-demo/tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "apps/ngneat-dag-demo/src/favicon.ico",
-              "apps/ngneat-dag-demo/src/assets",
-              "apps/ngneat-dag-demo/src/_redirects"
-            ],
-            "styles": ["apps/ngneat-dag-demo/src/styles.scss"],
-            "scripts": ["node_modules/leader-line/leader-line.min.js"]
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/ngneat-dag-demo/src/environments/environment.ts",
-                  "with": "apps/ngneat-dag-demo/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "ngx-build-plus:dev-server",
-          "options": {
-            "extraWebpackConfig": "webpack.config.js",
-            "browserTarget": "ngneat-dag-demo:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ngneat-dag-demo:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ngneat-dag-demo:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ngneat-dag-demo/src/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/ngneat-dag-demo/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "deploy": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "curl -X POST -d {} https://api.netlify.com/build_hooks/5fc512d8716a87008b24a307"
-              }
-            ]
-          }
-        }
-      }
-    },
-    "ngneat-dag-demo-e2e": {
-      "root": "apps/ngneat-dag-demo-e2e",
-      "sourceRoot": "apps/ngneat-dag-demo-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/ngneat-dag-demo-e2e/cypress.json",
-            "tsConfig": "apps/ngneat-dag-demo-e2e/tsconfig.e2e.json",
-            "devServerTarget": "ngneat-dag-demo:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ngneat-dag-demo:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/ngneat-dag-demo-e2e/**/*.{js,ts}"]
-          }
-        }
-      }
-    },
     "dag-manager-service": {
       "projectType": "library",
       "root": "libs/dag-manager-service",
@@ -157,68 +28,18 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/dag-manager-service/jest.config.js",
+            "jestConfig": "libs/dag-manager-service/jest.config.ts",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/dag-manager-service"]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
-    },
-    "shared-ui-components": {
-      "projectType": "library",
-      "root": "libs/shared/ui/components",
-      "sourceRoot": "libs/shared/ui/components/src",
-      "prefix": "ngneat-dag",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/shared/ui/components/src/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/shared/ui/components/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
       },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "demo-feature-home": {
-      "projectType": "library",
-      "root": "libs/demo/feature/home",
-      "sourceRoot": "libs/demo/feature/home/src",
-      "prefix": "ngneat-dag",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["libs/demo/feature/home/src/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/demo/feature/home/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      }
+      "tags": ["scope:lib", "type:util"]
     },
     "demo-feature-builder-demo": {
       "projectType": "library",
@@ -235,41 +56,211 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/demo/feature/builder-demo/jest.config.js",
+            "jestConfig": "libs/demo/feature/builder-demo/jest.config.ts",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/demo/feature/builder-demo"]
         }
       },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
-      }
-    }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular",
-    "analytics": "ddaacc56-6f23-4b0f-92c4-13a06bcaf184"
-  },
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
       },
-      "library": {
-        "linter": "eslint"
+      "tags": ["scope:demo", "type:feature"]
+    },
+    "demo-feature-home": {
+      "projectType": "library",
+      "root": "libs/demo/feature/home",
+      "sourceRoot": "libs/demo/feature/home/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/demo/feature/home/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/demo/feature/home/jest.config.ts",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/demo/feature/home"]
+        }
       },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "tags": ["scope:demo", "type:feature"]
     },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+    "ngneat-dag-demo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/ngneat-dag-demo",
+      "sourceRoot": "apps/ngneat-dag-demo/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/ngneat-dag-demo",
+            "index": "apps/ngneat-dag-demo/src/index.html",
+            "main": "apps/ngneat-dag-demo/src/main.ts",
+            "polyfills": "apps/ngneat-dag-demo/src/polyfills.ts",
+            "tsConfig": "apps/ngneat-dag-demo/tsconfig.app.json",
+            "assets": [
+              "apps/ngneat-dag-demo/src/favicon.ico",
+              "apps/ngneat-dag-demo/src/assets",
+              "apps/ngneat-dag-demo/src/_redirects"
+            ],
+            "styles": ["apps/ngneat-dag-demo/src/styles.scss"],
+            "scripts": ["node_modules/leader-line/leader-line.min.js"],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ngneat-dag-demo/src/environments/environment.ts",
+                  "with": "apps/ngneat-dag-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          },
+          "outputs": ["{options.outputPath}"],
+          "defaultConfiguration": ""
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ngneat-dag-demo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ngneat-dag-demo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngneat-dag-demo:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/ngneat-dag-demo/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/ngneat-dag-demo/jest.config.ts",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/apps/ngneat-dag-demo"]
+        },
+        "deploy": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "curl -X POST -d {} https://api.netlify.com/build_hooks/5fc512d8716a87008b24a307"
+              }
+            ]
+          }
+        }
+      },
+      "tags": []
     },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
+    "ngneat-dag-demo-e2e": {
+      "root": "apps/ngneat-dag-demo-e2e",
+      "sourceRoot": "apps/ngneat-dag-demo-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ngneat-dag-demo-e2e/cypress.json",
+            "tsConfig": "apps/ngneat-dag-demo-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ngneat-dag-demo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngneat-dag-demo:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/ngneat-dag-demo-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["ngneat-dag-demo"]
+    },
+    "shared-ui-components": {
+      "projectType": "library",
+      "root": "libs/shared/ui/components",
+      "sourceRoot": "libs/shared/ui/components/src",
+      "prefix": "ngneat-dag",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/shared/ui/components/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared/ui/components/jest.config.ts",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/shared/ui/components"]
+        }
+      },
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "tags": ["scope:shared", "type:ui"]
     }
-  },
-  "defaultProject": "ngneat-dag-demo"
+  }
 }

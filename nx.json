@@ -21,29 +21,42 @@
         "accessToken": "MTJmYzg4ZDMtZDI0MC00ZjUxLTgzNzAtNDZlYTkxMTY0MzdhfHJlYWQtd3JpdGU=",
         "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
-        "showUsageWarnings": true
+        "showUsageWarnings": true,
+        "parallel": 1
       }
     }
   },
-  "projects": {
-    "ngneat-dag-demo": {
-      "tags": []
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "analytics": "ddaacc56-6f23-4b0f-92c4-13a06bcaf184"
+  },
+  "defaultProject": "ngneat-dag-demo",
+  "generators": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
     },
-    "ngneat-dag-demo-e2e": {
-      "tags": [],
-      "implicitDependencies": ["ngneat-dag-demo"]
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
     },
-    "dag-manager-service": {
-      "tags": ["scope:lib", "type:util"]
-    },
-    "shared-ui-components": {
-      "tags": ["scope:shared", "type:ui"]
-    },
-    "demo-feature-home": {
-      "tags": ["scope:demo", "type:feature"]
-    },
-    "demo-feature-builder-demo": {
-      "tags": ["scope:demo", "type:feature"]
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
     }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }
