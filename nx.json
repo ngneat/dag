@@ -45,5 +45,30 @@
     "demo-feature-builder-demo": {
       "tags": ["scope:demo", "type:feature"]
     }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "analytics": "ddaacc56-6f23-4b0f-92c4-13a06bcaf184"
+  },
+  "defaultProject": "ngneat-dag-demo",
+  "generators": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
   }
 }

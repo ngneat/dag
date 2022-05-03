@@ -1,4 +1,7 @@
 {
+  "cli": {
+    "analytics": "5151f9df-50f6-4a59-824c-c63d4338a56f"
+  },
   "version": 1,
   "projects": {
     "ngneat-dag-demo": {
@@ -13,9 +16,8 @@
       "prefix": "ngneat-dag",
       "architect": {
         "build": {
-          "builder": "ngx-build-plus:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "extraWebpackConfig": "webpack.config.js",
             "outputPath": "dist/apps/ngneat-dag-demo",
             "index": "apps/ngneat-dag-demo/src/index.html",
             "main": "apps/ngneat-dag-demo/src/main.ts",
@@ -41,7 +43,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -59,12 +60,12 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
-          "builder": "ngx-build-plus:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "extraWebpackConfig": "webpack.config.js",
             "browserTarget": "ngneat-dag-demo:build"
           },
           "configurations": {
@@ -90,7 +91,8 @@
           "options": {
             "jestConfig": "apps/ngneat-dag-demo/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/ngneat-dag-demo"]
         },
         "deploy": {
           "builder": "@nrwl/workspace:run-commands",
@@ -159,7 +161,8 @@
           "options": {
             "jestConfig": "libs/dag-manager-service/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/dag-manager-service"]
         }
       },
       "schematics": {
@@ -185,7 +188,8 @@
           "options": {
             "jestConfig": "libs/shared/ui/components/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/shared/ui/components"]
         }
       },
       "schematics": {
@@ -211,7 +215,8 @@
           "options": {
             "jestConfig": "libs/demo/feature/home/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/demo/feature/home"]
         }
       },
       "schematics": {
@@ -237,7 +242,8 @@
           "options": {
             "jestConfig": "libs/demo/feature/builder-demo/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/demo/feature/builder-demo"]
         }
       },
       "schematics": {
@@ -246,30 +252,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "defaultCollection": "@nrwl/angular",
-    "analytics": "ddaacc56-6f23-4b0f-92c4-13a06bcaf184"
-  },
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
-    }
-  },
-  "defaultProject": "ngneat-dag-demo"
+  }
 }

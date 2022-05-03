@@ -10,22 +10,25 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     SharedUiComponentsModule,
-    RouterModule.forRoot([
-      {
-        path: '',
-        loadChildren: () =>
-          import('@ngneat-dag/demo/feature/home').then(
-            (module) => module.DemoFeatureHomeModule
-          ),
-      },
-      {
-        path: 'demo',
-        loadChildren: () =>
-          import('@ngneat-dag/demo/feature/builder-demo').then(
-            (module) => module.DemoFeatureBuilderDemoModule
-          ),
-      },
-    ]),
+    RouterModule.forRoot(
+      [
+        {
+          path: '',
+          loadChildren: () =>
+            import('@ngneat-dag/demo/feature/home').then(
+              (module) => module.DemoFeatureHomeModule
+            ),
+        },
+        {
+          path: 'demo',
+          loadChildren: () =>
+            import('@ngneat-dag/demo/feature/builder-demo').then(
+              (module) => module.DemoFeatureBuilderDemoModule
+            ),
+        },
+      ],
+      { relativeLinkResolution: 'legacy' }
+    ),
   ],
   providers: [],
   bootstrap: [AppComponent],
