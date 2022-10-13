@@ -27,7 +27,6 @@
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular",
     "analytics": "ddaacc56-6f23-4b0f-92c4-13a06bcaf184"
   },
   "defaultProject": "ngneat-dag-demo",
@@ -51,12 +50,10 @@
       "unitTestRunner": "jest"
     }
   },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
   }
 }
