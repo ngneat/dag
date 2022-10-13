@@ -7,7 +7,7 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { DagManagerService, DagModelItem } from '@ngneat/dag';
+import { DagManagerService, DagModelItem } from '../../../../../../dag-manager-service/src';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 
