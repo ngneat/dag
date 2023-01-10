@@ -1,6 +1,7 @@
 module.exports = {
   displayName: 'demo-feature-builder-demo',
 
+  testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
