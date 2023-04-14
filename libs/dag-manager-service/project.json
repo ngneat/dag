@@ -1,0 +1,41 @@
+{
+  "name": "dag-manager-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/dag-manager-service/src",
+  "prefix": "ngneat-dag",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "options": {
+        "tsConfig": "libs/dag-manager-service/tsconfig.lib.json",
+        "project": "libs/dag-manager-service/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/dag-manager-service/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/dag-manager-service/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/dag-manager-service/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/dag-manager-service"]
+    }
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "tags": ["scope:lib", "type:util"]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "demo-feature-builder-demo",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/demo/feature/builder-demo/src",
+  "prefix": "ngneat-dag",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/demo/feature/builder-demo/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/demo/feature/builder-demo/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/demo/feature/builder-demo"]
+    }
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "tags": ["scope:demo", "type:feature"]
+}
