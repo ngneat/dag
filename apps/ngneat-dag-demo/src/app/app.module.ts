@@ -27,7 +27,7 @@ import { AppComponent } from './app.component';
             ),
         },
       ],
-      { relativeLinkResolution: 'legacy' }
+      {}
     ),
   ],
   providers: [],

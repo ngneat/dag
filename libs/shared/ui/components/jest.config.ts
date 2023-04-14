@@ -1,6 +1,7 @@
 module.exports = {
   displayName: 'shared-ui-components',
 
+  testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {

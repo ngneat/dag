@@ -1,6 +1,7 @@
 module.exports = {
   displayName: 'ngneat-dag-demo',
 
+  testEnvironment: 'jest-environment-jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {

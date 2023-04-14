@@ -22,7 +22,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/dag-manager-service/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/dag-manager-service/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -31,7 +33,9 @@
             "jestConfig": "libs/dag-manager-service/jest.config.ts",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/dag-manager-service"]
+          "outputs": [
+            "coverage/libs/dag-manager-service"
+          ]
         }
       },
       "schematics": {
@@ -39,7 +43,10 @@
           "style": "scss"
         }
       },
-      "tags": ["scope:lib", "type:util"]
+      "tags": [
+        "scope:lib",
+        "type:util"
+      ]
     },
     "demo-feature-builder-demo": {
       "projectType": "library",
@@ -50,7 +57,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/demo/feature/builder-demo/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/demo/feature/builder-demo/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -59,7 +68,9 @@
             "jestConfig": "libs/demo/feature/builder-demo/jest.config.ts",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/demo/feature/builder-demo"]
+          "outputs": [
+            "coverage/libs/demo/feature/builder-demo"
+          ]
         }
       },
       "schematics": {
@@ -67,7 +78,10 @@
           "style": "scss"
         }
       },
-      "tags": ["scope:demo", "type:feature"]
+      "tags": [
+        "scope:demo",
+        "type:feature"
+      ]
     },
     "demo-feature-home": {
       "projectType": "library",
@@ -78,7 +92,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/demo/feature/home/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/demo/feature/home/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -87,7 +103,9 @@
             "jestConfig": "libs/demo/feature/home/jest.config.ts",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/demo/feature/home"]
+          "outputs": [
+            "coverage/libs/demo/feature/home"
+          ]
         }
       },
       "schematics": {
@@ -95,7 +113,10 @@
           "style": "scss"
         }
       },
-      "tags": ["scope:demo", "type:feature"]
+      "tags": [
+        "scope:demo",
+        "type:feature"
+      ]
     },
     "ngneat-dag-demo": {
       "projectType": "application",
@@ -121,8 +142,12 @@
               "apps/ngneat-dag-demo/src/assets",
               "apps/ngneat-dag-demo/src/_redirects"
             ],
-            "styles": ["apps/ngneat-dag-demo/src/styles.scss"],
-            "scripts": ["node_modules/leader-line/leader-line.min.js"],
+            "styles": [
+              "apps/ngneat-dag-demo/src/styles.scss"
+            ],
+            "scripts": [
+              "node_modules/leader-line/leader-line.min.js"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -159,7 +184,9 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "defaultConfiguration": ""
         },
         "serve": {
@@ -182,7 +209,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/ngneat-dag-demo/src/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/ngneat-dag-demo/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -191,7 +220,9 @@
             "jestConfig": "apps/ngneat-dag-demo/jest.config.ts",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/apps/ngneat-dag-demo"]
+          "outputs": [
+            "coverage/apps/ngneat-dag-demo"
+          ]
         },
         "deploy": {
           "builder": "@nrwl/workspace:run-commands",
@@ -214,7 +245,7 @@
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
           "options": {
-            "cypressConfig": "apps/ngneat-dag-demo-e2e/cypress.json",
+            "cypressConfig": "apps/ngneat-dag-demo-e2e/cypress.config.js",
             "tsConfig": "apps/ngneat-dag-demo-e2e/tsconfig.e2e.json",
             "devServerTarget": "ngneat-dag-demo:serve"
           },
@@ -227,12 +258,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/ngneat-dag-demo-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/ngneat-dag-demo-e2e/**/*.{js,ts}"
+            ]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": ["ngneat-dag-demo"]
+      "implicitDependencies": [
+        "ngneat-dag-demo"
+      ]
     },
     "shared-ui-components": {
       "projectType": "library",
@@ -243,7 +278,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/shared/ui/components/src/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/shared/ui/components/src/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -252,7 +289,9 @@
             "jestConfig": "libs/shared/ui/components/jest.config.ts",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/shared/ui/components"]
+          "outputs": [
+            "coverage/libs/shared/ui/components"
+          ]
         }
       },
       "schematics": {
@@ -260,7 +299,10 @@
           "style": "scss"
         }
       },
-      "tags": ["scope:shared", "type:ui"]
+      "tags": [
+        "scope:shared",
+        "type:ui"
+      ]
     }
   }
 }
