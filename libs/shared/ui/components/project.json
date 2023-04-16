@@ -1,0 +1,29 @@
+{
+  "name": "shared-ui-components",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/ui/components/src",
+  "prefix": "ngneat-dag",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/ui/components/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/shared/ui/components/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/shared/ui/components"]
+    }
+  },
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
+  "tags": ["scope:shared", "type:ui"]
+}
