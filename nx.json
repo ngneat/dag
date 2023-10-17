@@ -16,15 +16,10 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
         "accessToken": "MTJmYzg4ZDMtZDI0MC00ZjUxLTgzNzAtNDZlYTkxMTY0MzdhfHJlYWQtd3JpdGU=",
-        "cacheableOperations": [
-          "build",
-          "test",
-          "lint",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
         "parallel": 1
@@ -36,7 +31,14 @@
   },
   "defaultProject": "ngneat-dag-demo",
   "generators": {
-    "@nrwl/angular": {
+    "@nx/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nx/angular:library": {
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular": {
       "application": {
         "linter": "eslint"
       },
@@ -46,21 +48,12 @@
       "storybook-configuration": {
         "linter": "eslint"
       }
-    },
-    "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
     }
   },
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     }
   }
 }

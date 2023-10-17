@@ -5,7 +5,7 @@
   "projectType": "application",
   "targets": {
     "e2e": {
-      "executor": "@nrwl/cypress:cypress",
+      "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/ngneat-dag-demo-e2e/cypress.config.js",
         "tsConfig": "apps/ngneat-dag-demo-e2e/tsconfig.e2e.json",

@@ -6,10 +6,11 @@
   "prefix": "ngneat-dag",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:package",
+      "executor": "@nx/angular:package",
       "options": {
         "tsConfig": "libs/dag-manager-service/tsconfig.lib.json",
-        "project": "libs/dag-manager-service/ng-package.json"
+        "project": "libs/dag-manager-service/ng-package.json",
+        "updateBuildableProjectDepsInPackageJson": true
       },
       "configurations": {
         "production": {
@@ -24,12 +25,12 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/dag-manager-service/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/dag-manager-service"]
+      "outputs": ["{workspaceRoot}/coverage/libs/dag-manager-service"]
     }
   },
   "generators": {

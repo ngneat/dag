@@ -88,15 +88,15 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "apps/ngneat-dag-demo/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/apps/ngneat-dag-demo"]
+      "outputs": ["{workspaceRoot}/coverage/apps/ngneat-dag-demo"]
     },
     "deploy": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "@nx/workspace:run-commands",
       "options": {
         "commands": [
           {

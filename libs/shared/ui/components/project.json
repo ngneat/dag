@@ -12,12 +12,12 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/shared/ui/components/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/shared/ui/components"]
+      "outputs": ["{workspaceRoot}/coverage/libs/shared/ui/components"]
     }
   },
   "generators": {

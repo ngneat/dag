@@ -1,6 +1,6 @@
-const { getJestProjects } = require('@nrwl/jest');
+const { getJestProjects } = require('@nx/jest');
 
 module.exports = {
   projects: getJestProjects(),
-  testEnvironment: 'jest-environment-jsdom'
+  testEnvironment: 'jest-environment-jsdom',
 };
