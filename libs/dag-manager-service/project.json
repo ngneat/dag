@@ -27,8 +27,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/dag-manager-service/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/dag-manager-service/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/dag-manager-service"]
     }

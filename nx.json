@@ -51,14 +51,24 @@
       "dependsOn": ["^build"],
       "cache": true
     },
-    "test": {
-      "cache": true
-    },
     "lint": {
       "cache": true
     },
     "e2e": {
       "cache": true
+    },
+    "@nx/jest:jest": {
+      "cache": true,
+      "inputs": ["default", "^default"],
+      "options": {
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
     }
   },
   "nxCloudAccessToken": "MTJmYzg4ZDMtZDI0MC00ZjUxLTgzNzAtNDZlYTkxMTY0MzdhfHJlYWQtd3JpdGU=",

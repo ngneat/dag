@@ -67,18 +67,18 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "ngneat-dag-demo:build"
+        "buildTarget": "ngneat-dag-demo:build"
       },
       "configurations": {
         "production": {
-          "browserTarget": "ngneat-dag-demo:build:production"
+          "buildTarget": "ngneat-dag-demo:build:production"
         }
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "ngneat-dag-demo:build"
+        "buildTarget": "ngneat-dag-demo:build"
       }
     },
     "lint": {
@@ -90,8 +90,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "apps/ngneat-dag-demo/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "apps/ngneat-dag-demo/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/apps/ngneat-dag-demo"]
     },
