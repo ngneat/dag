@@ -1,5 +1,4 @@
 {
-  "npmScope": "ngneat-dag",
   "affected": {
     "defaultBase": "main"
   },
@@ -16,13 +15,9 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx-cloud",
       "options": {
-        "accessToken": "MTJmYzg4ZDMtZDI0MC00ZjUxLTgzNzAtNDZlYTkxMTY0MzdhfHJlYWQtd3JpdGU=",
-        "cacheableOperations": ["build", "test", "lint", "e2e"],
         "canTrackAnalytics": false,
-        "showUsageWarnings": true,
-        "parallel": 1
+        "showUsageWarnings": true
       }
     }
   },
@@ -53,7 +48,29 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "e2e": {
+      "cache": true
+    },
+    "@nx/jest:jest": {
+      "cache": true,
+      "inputs": ["default", "^default"],
+      "options": {
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
     }
-  }
+  },
+  "nxCloudAccessToken": "MTJmYzg4ZDMtZDI0MC00ZjUxLTgzNzAtNDZlYTkxMTY0MzdhfHJlYWQtd3JpdGU=",
+  "parallel": 1
 }

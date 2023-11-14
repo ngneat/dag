@@ -14,8 +14,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/demo/feature/home/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/demo/feature/home/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/demo/feature/home"]
     }

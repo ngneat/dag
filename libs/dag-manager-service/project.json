@@ -9,8 +9,7 @@
       "executor": "@nx/angular:package",
       "options": {
         "tsConfig": "libs/dag-manager-service/tsconfig.lib.json",
-        "project": "libs/dag-manager-service/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": true
+        "project": "libs/dag-manager-service/ng-package.json"
       },
       "configurations": {
         "production": {
@@ -27,8 +26,7 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/dag-manager-service/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "libs/dag-manager-service/jest.config.ts"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/dag-manager-service"]
     }
