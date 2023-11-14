@@ -9,8 +9,7 @@
       "executor": "@nx/angular:package",
       "options": {
         "tsConfig": "libs/dag-manager-service/tsconfig.lib.json",
-        "project": "libs/dag-manager-service/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": true
+        "project": "libs/dag-manager-service/ng-package.json"
       },
       "configurations": {
         "production": {
