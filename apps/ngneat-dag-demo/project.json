@@ -2,13 +2,14 @@
   "name": "ngneat-dag-demo",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "apps/ngneat-dag-demo/src",
+  "prefix": "ngneat-dag",
+  "tags": [],
   "generators": {
     "@schematics/angular:component": {
       "style": "scss"
     }
   },
-  "sourceRoot": "apps/ngneat-dag-demo/src",
-  "prefix": "ngneat-dag",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -104,6 +105,5 @@
         ]
       }
     }
-  },
-  "tags": []
+  }
 }

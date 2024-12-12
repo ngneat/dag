@@ -3,6 +3,8 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/ngneat-dag-demo-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["ngneat-dag-demo"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
@@ -23,7 +25,5 @@
         "lintFilePatterns": ["apps/ngneat-dag-demo-e2e/**/*.{js,ts}"]
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["ngneat-dag-demo"]
+  }
 }
