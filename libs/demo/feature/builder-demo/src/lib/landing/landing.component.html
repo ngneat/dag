@@ -4,32 +4,34 @@
       &#64;ngneat/dag Live Demo
     </h1>
 
-    <ng-container *ngIf="workflow$ | async as workflow">
-      <button
-        *ngIf="(boxItemsLength$ | async) === 0"
-        class="shadow flex items-center justify-center px-3 py-1 border border-transparent text-base font-medium rounded-md text-red-400 bg-white hover:bg-gray-50 transition duration-300 my-2 mx-auto"
-        (click)="addItem({ parentIds: [0], numberOfChildren: 1 })"
-      >
-        Add Starting Node
-      </button>
-
-      <div
-        class="flex justify-center items-center"
-        *ngFor="let row of workflow; let first = first"
-        [class.mt-16]="!first"
-      >
+    @if (workflow$ | async; as workflow) {
+      @if ((boxItemsLength$ | async) === 0) {
+        <button
+          class="shadow flex items-center justify-center px-3 py-1 border border-transparent text-base font-medium rounded-md text-red-400 bg-white hover:bg-gray-50 transition duration-300 my-2 mx-auto"
+          (click)="addItem({ parentIds: [0], numberOfChildren: 1 })"
+          >
+          Add Starting Node
+        </button>
+      }
+      @for (row of workflow; track row; let first = $first) {
         <div
-          class="mt-4 flex justify-between items-center"
-          *ngFor="let col of row"
-        >
-          <ngneat-dag-node
-            #boxes
-            [item]="col"
-            (addItem)="addItem($event)"
-            (removeItem)="removeItem($event)"
-          ></ngneat-dag-node>
+          class="flex justify-center items-center"
+          [class.mt-16]="!first"
+          >
+          @for (col of row; track col) {
+            <div
+              class="mt-4 flex justify-between items-center"
+              >
+              <ngneat-dag-node
+                #boxes
+                [item]="col"
+                (addItem)="addItem($event)"
+                (removeItem)="removeItem($event)"
+              ></ngneat-dag-node>
+            </div>
+          }
         </div>
-      </div>
-    </ng-container>
+      }
+    }
   </div>
 </div>

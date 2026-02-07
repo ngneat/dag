@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/dag-manager-service/src",
   "prefix": "ngneat-dag",
+  "tags": ["scope:lib", "type:util"],
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -26,15 +32,10 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/dag-manager-service/jest.config.ts"
+        "jestConfig": "libs/dag-manager-service/jest.config.ts",
+        "tsConfig": "libs/dag-manager-service/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/dag-manager-service"]
     }
-  },
-  "generators": {
-    "@schematics/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": ["scope:lib", "type:util"]
+  }
 }

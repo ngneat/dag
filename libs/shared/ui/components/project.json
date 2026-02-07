@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/shared/ui/components/src",
   "prefix": "ngneat-dag",
+  "tags": ["scope:shared", "type:ui"],
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -14,15 +20,10 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/shared/ui/components/jest.config.ts"
+        "jestConfig": "libs/shared/ui/components/jest.config.ts",
+        "tsConfig": "libs/shared/ui/components/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/shared/ui/components"]
     }
-  },
-  "generators": {
-    "@schematics/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": ["scope:shared", "type:ui"]
+  }
 }

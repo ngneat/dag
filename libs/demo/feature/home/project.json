@@ -4,6 +4,12 @@
   "projectType": "library",
   "sourceRoot": "libs/demo/feature/home/src",
   "prefix": "ngneat-dag",
+  "tags": ["scope:demo", "type:feature"],
+  "generators": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -14,15 +20,10 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "libs/demo/feature/home/jest.config.ts"
+        "jestConfig": "libs/demo/feature/home/jest.config.ts",
+        "tsConfig": "libs/demo/feature/home/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/libs/demo/feature/home"]
     }
-  },
-  "generators": {
-    "@schematics/angular:component": {
-      "style": "scss"
-    }
-  },
-  "tags": ["scope:demo", "type:feature"]
+  }
 }

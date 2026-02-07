@@ -74,7 +74,8 @@
         "production": {
           "buildTarget": "ngneat-dag-demo:build:production"
         }
-      }
+      },
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
@@ -91,7 +92,8 @@
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
-        "jestConfig": "apps/ngneat-dag-demo/jest.config.ts"
+        "jestConfig": "apps/ngneat-dag-demo/jest.config.ts",
+        "tsConfig": "apps/ngneat-dag-demo/tsconfig.spec.json"
       },
       "outputs": ["{workspaceRoot}/coverage/apps/ngneat-dag-demo"]
     },

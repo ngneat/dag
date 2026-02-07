@@ -10,7 +10,6 @@
       "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/ngneat-dag-demo-e2e/cypress.config.js",
-        "tsConfig": "apps/ngneat-dag-demo-e2e/tsconfig.e2e.json",
         "devServerTarget": "ngneat-dag-demo:serve"
       },
       "configurations": {
