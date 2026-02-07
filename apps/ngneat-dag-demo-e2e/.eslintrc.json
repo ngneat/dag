@@ -1,11 +1,11 @@
 {
   "extends": ["plugin:cypress/recommended", "../../.eslintrc.json"],
-  "ignorePatterns": ["!**/*"],
+  "ignorePatterns": ["!**/*", "src/support/commands.ts"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parserOptions": {
-        "project": ["apps/ngneat-dag-demo-e2e/tsconfig.*?.json"]
+        "project": ["apps/ngneat-dag-demo-e2e/tsconfig.e2e.json"]
       },
       "rules": {}
     },

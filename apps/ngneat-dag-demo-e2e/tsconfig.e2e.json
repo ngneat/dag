@@ -6,5 +6,6 @@
     "allowJs": true,
     "types": ["cypress", "node"]
   },
-  "include": ["src/**/*.ts", "src/**/*.js"]
+  "include": ["src/**/*.ts", "src/**/*.js", "./cypress.config.js"],
+  "files": ["src/support/commands.ts"]
 }

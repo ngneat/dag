@@ -9,12 +9,8 @@ module.exports = defineConfig({
   screenshotsFolder: '../../dist/cypress/apps/ngneat-dag-demo-e2e/screenshots',
   chromeWebSecurity: false,
   e2e: {
-    setupNodeEvents(on, config) {},
     specPattern: './src/integration/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: './src/support/index.ts',
-    // Please ensure you use `cy.origin()` when navigating between domains and remove this option.
-    // See https://docs.cypress.io/app/references/migration-guide#Changes-to-cyorigin
-    injectDocumentDomain: true,
     // Please ensure you use `cy.origin()` when navigating between domains and remove this option.
     // See https://docs.cypress.io/app/references/migration-guide#Changes-to-cyorigin
     injectDocumentDomain: true,
