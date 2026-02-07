@@ -27,7 +27,8 @@
             "prefix": "ngneat-dag",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/prefer-standalone": "off"
       }
     },
     {

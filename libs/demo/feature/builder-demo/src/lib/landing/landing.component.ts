@@ -18,10 +18,11 @@ export interface WorkflowItem extends DagModelItem {
 }
 
 @Component({
-  selector: 'ngneat-dag-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss'],
-  providers: [DagManagerService],
+    selector: 'ngneat-dag-landing',
+    templateUrl: './landing.component.html',
+    styleUrls: ['./landing.component.scss'],
+    providers: [DagManagerService],
+    standalone: false
 })
 export class LandingComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('boxes', { read: ElementRef }) boxes: QueryList<ElementRef>;

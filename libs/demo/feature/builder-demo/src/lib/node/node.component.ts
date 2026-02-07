@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WorkflowItem } from '../landing/landing.component';
 
 @Component({
-  selector: 'ngneat-dag-node',
-  templateUrl: './node.component.html',
-  styleUrls: ['./node.component.scss'],
+    selector: 'ngneat-dag-node',
+    templateUrl: './node.component.html',
+    styleUrls: ['./node.component.scss'],
+    standalone: false
 })
 export class NodeComponent {
   @Input() item: WorkflowItem;
