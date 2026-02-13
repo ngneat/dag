@@ -414,13 +414,9 @@ export class DagManagerService<T extends DagModelItem> {
   }
 
   addNewRelation(childId: number, parentId: number): void {
-    try {
-      const items = this.addRelation(childId, parentId);
-      const newDagModel = this.convertArrayToDagModel(items);
-      this.dagModelBs.next(newDagModel);
-    } catch (e) {
-      throw new Error(e);
-    }
+    const items = this.addRelation(childId, parentId);
+    const newDagModel = this.convertArrayToDagModel(items);
+    this.dagModelBs.next(newDagModel);
   }
 
   insertNode(idOfNodeThatMoves: number, newNode: T): Array<T> {
