@@ -4,11 +4,10 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class DagManagerService<T extends DagModelItem> {
-  private dagModelBs: BehaviorSubject<Array<Array<T>>> = new BehaviorSubject<
-    Array<Array<T>>
+  private dagModelBs: BehaviorSubject<T[][] | null> = new BehaviorSubject<
+    T[][] | null
   >(null);
-  public dagModel$: Observable<Array<Array<T>>> =
-    this.dagModelBs.asObservable();
+  public dagModel$: Observable<T[][]> = this.dagModelBs.asObservable();
   private nextStepNumber: number;
 
   setNextNumber(num: number) {
@@ -16,7 +15,7 @@ export class DagManagerService<T extends DagModelItem> {
   }
 
   setNewItemsArrayAsDagModel(arr: T[]) {
-    const multi: Array<Array<T>> = this.convertArrayToDagModel(arr);
+    const multi: T[][] = this.convertArrayToDagModel(arr);
     this.dagModelBs.next(multi);
   }
 
@@ -28,12 +27,12 @@ export class DagManagerService<T extends DagModelItem> {
     return this.convertDagModelToSingleArray(this.dagModelBs.getValue());
   }
 
-  convertDagModelToSingleArray(arr: Array<Array<T>>): Array<T> {
+  convertDagModelToSingleArray(arr: T[][]): T[] {
     return arr.flat();
   }
 
-  convertArrayToDagModel(itemsArray: Array<T>): Array<Array<T>> {
-    const result: Array<Array<T>> = [];
+  convertArrayToDagModel(itemsArray: T[]): T[][] {
+    const result: T[][] = [];
     const visited = new Set<number>();
 
     // Stack for DFS: { parentId, level }
@@ -101,19 +100,19 @@ export class DagManagerService<T extends DagModelItem> {
     return result;
   }
 
-  findInDoubleArray(idToFind: number, doubleArr: Array<Array<T>>): number {
-    const flat: Array<T> = this.convertDagModelToSingleArray(doubleArr);
+  findInDoubleArray(idToFind: number, doubleArr: T[][]): number {
+    const flat: T[] = this.convertDagModelToSingleArray(doubleArr);
     return flat.findIndex((item) => item.stepId === idToFind);
   }
 
   removeItem(
     idToRemove: number,
-    flatArray: Array<T>,
+    flatArray: T[],
     // isChildOfDeletedBranch is no longer needed in the public signature but was part of recursion.
     // We can keep the signature for compatibility or remove it if not public API (it is public in class).
     // The implementation will ignore it or use internal queue state.
     isChildOfDeletedBranch = false
-  ): Array<T> {
+  ): T[] {
     // QueueItem: { id: number, isChildOfDeletedBranch: boolean }
     const queue = [{ id: idToRemove, isChildOfDeletedBranch }];
 
@@ -210,8 +209,8 @@ export class DagManagerService<T extends DagModelItem> {
     numberOfChildren,
     parentIds,
     genericFields: Omit<T, keyof DagModelItem>
-  ): Array<T> {
-    const newChildren: Array<T> = [];
+  ): T[] {
+    const newChildren: T[] = [];
     for (let count = 1; count <= numberOfChildren; count++) {
       const newItem: T = <T>{
         ...genericFields,
@@ -227,53 +226,55 @@ export class DagManagerService<T extends DagModelItem> {
 
   addItem(
     parentIds: number[],
-    flatArray: Array<T>,
+    flatArray: T[],
     numberOfChildren = 1,
     startingBranch = 1,
     genericFields: Omit<T, keyof DagModelItem>
-  ): Array<T> {
+  ): T[] {
     const potentialChildrenIds: number[] = [];
     parentIds.forEach((pid) => {
-      return flatArray
-        .filter((f: T) => f.parentIds.includes(pid))
-        .forEach((id: T) => potentialChildrenIds.push(id.stepId));
+      flatArray
+        .filter((f) => f.parentIds.includes(pid))
+        .forEach((id) => potentialChildrenIds.push(id.stepId));
     });
 
-    const newChildren: Array<T> = this.createChildrenItems(
+    const newChildren: T[] = this.createChildrenItems(
       startingBranch,
       numberOfChildren,
       parentIds,
       genericFields
     );
 
-    potentialChildrenIds.forEach((childId: number) => {
-      const child = flatArray.find((i: T) => i.stepId === childId);
-
-      parentIds.forEach((pid: number) => {
-        const oldParentIdIndex = child.parentIds.findIndex(
-          (cpid: number) => cpid === pid
+    // Immutable update of children
+    const updatedFlatArray = flatArray.map((item) => {
+      if (potentialChildrenIds.includes(item.stepId)) {
+        const newItem = { ...item };
+        // Remove old parents and add the new child as parent
+        newItem.parentIds = newItem.parentIds.filter(
+          (pid) => !parentIds.includes(pid)
         );
-        child.parentIds.splice(oldParentIdIndex, 1);
-        child.parentIds.push(newChildren[0].stepId);
-      });
+        newItem.parentIds.push(newChildren[0].stepId);
+        return newItem;
+      }
+      return item;
     });
 
-    return [...flatArray, ...newChildren];
+    return [...updatedFlatArray, ...newChildren];
   }
 
   addItemAsNewPath(
     parentId: number,
-    flatArray: Array<T>,
+    flatArray: T[],
     numberOfChildren: number,
     genericFields: Omit<T, keyof DagModelItem>
-  ): Array<T> {
-    const currentChildrenOfParent: Array<T> = flatArray
+  ): T[] {
+    const currentChildrenOfParent: T[] = flatArray
       .filter((item) => item.parentIds.includes(parentId))
       .sort((a, b) => (a.branchPath > b.branchPath ? 1 : -1));
     const nextBranch: number =
       currentChildrenOfParent[currentChildrenOfParent.length - 1].branchPath +
       1;
-    const newChildren: Array<T> = this.createChildrenItems(
+    const newChildren: T[] = this.createChildrenItems(
       nextBranch,
       numberOfChildren,
       [parentId],
@@ -283,7 +284,7 @@ export class DagManagerService<T extends DagModelItem> {
     return [...flatArray, ...newChildren];
   }
 
-  getNodeDepth(stepId: number, items: Array<T>): number {
+  getNodeDepth(stepId: number, items: T[]): number {
     const item = items.find((i) => i.stepId === stepId);
     if (!item) return 0;
 
@@ -322,7 +323,7 @@ export class DagManagerService<T extends DagModelItem> {
     return maxDepth;
   }
 
-  canAddRelation(childId: number, parentId: number, items: Array<T>) {
+  canAddRelation(childId: number, parentId: number, items: T[]) {
     const childItem: T = items.find((item: T) => item.stepId === childId);
     const parentItem: T = items.find((item: T) => item.stepId === parentId);
 
@@ -367,11 +368,7 @@ export class DagManagerService<T extends DagModelItem> {
     );
   }
 
-  wouldCreateCircularDependency(
-    id1: number,
-    id2: number,
-    items: Array<T>
-  ): boolean {
+  wouldCreateCircularDependency(id1: number, id2: number, items: T[]): boolean {
     const item1: T = items.find((item: T) => item.stepId === id1);
     const item2: T = items.find((item: T) => item.stepId === id2);
 
@@ -399,7 +396,7 @@ export class DagManagerService<T extends DagModelItem> {
     return isParent;
   }
 
-  areNodesSiblings(node1Id: number, node2Id: number, items: Array<T>): boolean {
+  areNodesSiblings(node1Id: number, node2Id: number, items: T[]): boolean {
     const node1: T = items.find((item: T) => item.stepId === node1Id);
     const node2: T = items.find((item: T) => item.stepId === node2Id);
 
@@ -423,7 +420,7 @@ export class DagManagerService<T extends DagModelItem> {
     startingBranch = 1,
     genericFields: Omit<T, keyof DagModelItem>
   ): void {
-    const updatedItems: Array<T> = this.addItem(
+    const updatedItems: T[] = this.addItem(
       parentIds,
       this.getSingleDimensionalArrayFromModel(),
       numberOfChildren,
@@ -439,7 +436,7 @@ export class DagManagerService<T extends DagModelItem> {
     numberOfChildren: number,
     genericFields: Omit<T, keyof DagModelItem>
   ): void {
-    const updatedItems: Array<T> = this.addItemAsNewPath(
+    const updatedItems: T[] = this.addItemAsNewPath(
       parentId,
       this.getSingleDimensionalArrayFromModel(),
       numberOfChildren,
@@ -450,7 +447,7 @@ export class DagManagerService<T extends DagModelItem> {
   }
 
   removeStep(idToRemove: number): void {
-    const updatedItems: Array<T> = this.removeItem(
+    const updatedItems: T[] = this.removeItem(
       idToRemove,
       this.getSingleDimensionalArrayFromModel(),
       false
@@ -460,13 +457,13 @@ export class DagManagerService<T extends DagModelItem> {
   }
 
   nodeChildrenCount(stepId: number) {
-    const items: Array<T> = this.getSingleDimensionalArrayFromModel();
+    const items: T[] = this.getSingleDimensionalArrayFromModel();
     const childCount = items.filter((i) => i.parentIds.includes(stepId)).length;
     return childCount;
   }
 
-  addRelation(childId: number, parentId: number): Array<T> {
-    const items: Array<T> = this.getSingleDimensionalArrayFromModel();
+  addRelation(childId: number, parentId: number): T[] {
+    const items: T[] = this.getSingleDimensionalArrayFromModel();
     const canAddRelation = this.canAddRelation(childId, parentId, items);
 
     if (canAddRelation) {
@@ -491,7 +488,7 @@ export class DagManagerService<T extends DagModelItem> {
     this.dagModelBs.next(newDagModel);
   }
 
-  insertNode(idOfNodeThatMoves: number, newNode: T): Array<T> {
+  insertNode(idOfNodeThatMoves: number, newNode: T): T[] {
     const items = this.getSingleDimensionalArrayFromModel();
     const nodeToAdd = { ...newNode, stepId: this.nextStepNumber++ };
 
