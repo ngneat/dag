@@ -10,7 +10,7 @@ export class DagManagerService<T extends DagModelItem> {
   public dagModel$: Observable<T[][]> = this.dagModelBs.asObservable();
   private nextStepNumber: number;
 
-  setNextNumber(num: number) {
+  setNextNumber(num: number): void {
     this.nextStepNumber = num;
   }
 
@@ -19,11 +19,11 @@ export class DagManagerService<T extends DagModelItem> {
     this.dagModelBs.next(multi);
   }
 
-  getCurrentDagModel() {
+  getCurrentDagModel(): T[][] | null {
     return this.dagModelBs.getValue();
   }
 
-  getSingleDimensionalArrayFromModel() {
+  getSingleDimensionalArrayFromModel(): T[] {
     return this.convertDagModelToSingleArray(this.dagModelBs.getValue());
   }
 
@@ -323,7 +323,7 @@ export class DagManagerService<T extends DagModelItem> {
     return maxDepth;
   }
 
-  canAddRelation(childId: number, parentId: number, items: T[]) {
+  canAddRelation(childId: number, parentId: number, items: T[]): boolean {
     const childItem: T = items.find((item: T) => item.stepId === childId);
     const parentItem: T = items.find((item: T) => item.stepId === parentId);
 
@@ -375,7 +375,7 @@ export class DagManagerService<T extends DagModelItem> {
     return item1.parentIds.includes(id2) || item2.parentIds.includes(id1);
   }
 
-  isNodeAChildOfParent(childId, parentId, items): boolean {
+  isNodeAChildOfParent(childId: number, parentId: number, items: T[]): boolean {
     const childItem: T = items.find((item: T) => item.stepId === childId);
     const parentItem: T = items.find((item: T) => item.stepId === parentId);
 
@@ -456,7 +456,7 @@ export class DagManagerService<T extends DagModelItem> {
     this.dagModelBs.next(dagModel);
   }
 
-  nodeChildrenCount(stepId: number) {
+  nodeChildrenCount(stepId: number): number {
     const items: T[] = this.getSingleDimensionalArrayFromModel();
     const childCount = items.filter((i) => i.parentIds.includes(stepId)).length;
     return childCount;
@@ -517,7 +517,7 @@ export class DagManagerService<T extends DagModelItem> {
     this.dagModelBs.next(newDagModel);
   }
 
-  insertNodeAndRemoveOld(idOfNodeToReplace: number, newNode: T) {
+  insertNodeAndRemoveOld(idOfNodeToReplace: number, newNode: T): T[] {
     const itemsWithInserted = this.insertNode(idOfNodeToReplace, newNode);
     const itemsAfterDeleted = this.removeItem(
       idOfNodeToReplace,
@@ -527,7 +527,7 @@ export class DagManagerService<T extends DagModelItem> {
     return itemsAfterDeleted;
   }
 
-  insertNewNodeAndRemoveOld(idOfNodeToReplace: number, newNode: T) {
+  insertNewNodeAndRemoveOld(idOfNodeToReplace: number, newNode: T): void {
     const itemsWithInserted = this.insertNode(idOfNodeToReplace, newNode);
     const itemsAfterDeleted = this.removeItem(
       idOfNodeToReplace,
