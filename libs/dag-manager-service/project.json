@@ -21,7 +21,8 @@
         "production": {
           "tsConfig": "libs/dag-manager-service/tsconfig.lib.prod.json"
         }
-      }
+      },
+      "defaultConfiguration": "production"
     },
     "lint": {
       "executor": "@nx/eslint:lint",
