@@ -33,43 +33,71 @@ export class DagManagerService<T extends DagModelItem> {
   }
 
   convertArrayToDagModel(itemsArray: Array<T>): Array<Array<T>> {
-    const result = [];
-    const levels = {};
+    const result: Array<Array<T>> = [];
+    const visited = new Set<number>();
 
-    const modify = (data, pid = 0, level = 0) =>
-      data
-        .filter(({ parentIds, stepId }) => {
-          if (levels[level] && levels[level].includes(stepId)) return false;
-          return parentIds.includes(pid);
+    // Stack for DFS: { parentId, level }
+    // Start with "virtual" root parentId 0 at level 0
+    const stack = [{ parentId: 0, level: 0 }];
+
+    while (stack.length > 0) {
+      const { parentId, level } = stack.pop();
+
+      // Find children of this parent
+      const children = itemsArray
+        .filter((item) => {
+          // Prevent cycling if a node is already processed at this level or general visited check?
+          // Original logic: "if (levels[level] && levels[level].includes(stepId)) return false;"
+          // And "if (this.findInDoubleArray(e.stepId, result) === -1)" add it.
+          // We can check if stepId is already in 'result'.
+          return item.parentIds.includes(parentId);
         })
-        .forEach((e) => {
-          if (!levels[level]) levels[level] = [];
-          levels[level].push(e.stepId);
+        .sort((a, b) => a.branchPath - b.branchPath); // Sort by branchPath ascending
 
-          if (this.findInDoubleArray(e.stepId, result) === -1) {
-            if (!result[level]) result[level] = [e];
-            else result[level].push(e);
-          }
+      // If we are processing children (level 1+), we need to ensure they are added to result
+      // Original logic added children to result[level]
 
-          // sort by branchPath on a given level
-          if (result[level - 1]) {
-            const sortedResults: Array<T> = [];
-            result[level - 1].forEach((i: T) => {
-              const childrenArray = result[level].filter((ch: T) =>
-                ch.parentIds.includes(i.stepId)
-              );
-              childrenArray.sort((a: T, b: T) =>
-                a.branchPath > b.branchPath ? 1 : -1
-              );
-              sortedResults.push(...childrenArray);
-            });
-            result[level] = [...sortedResults];
-          }
+      // Since we simulate DFS, we want to process children in reverse order so they come off stack in correct order?
+      // Or we just add them to the result now.
 
-          modify(data, e.stepId, level + 1);
-        });
+      // We iterate children to add them to result and push to stack
+      // To preserve order in simulation, we might need to push in reverse order
+      for (let i = children.length - 1; i >= 0; i--) {
+        const child = children[i];
 
-    modify(itemsArray);
+        // Ensure result level exists
+        if (!result[level]) result[level] = [];
+
+        // Add to result if not present anywhere
+        if (this.findInDoubleArray(child.stepId, result) === -1) {
+          result[level].push(child);
+          visited.add(child.stepId);
+          // Push to stack to process ITS children next (next level)
+          stack.push({ parentId: child.stepId, level: level + 1 });
+        } else {
+          // If already visited, do we still traverse?
+          // Original logic: "modify(data, e.stepId, level + 1)" was called for EACH child,
+          // even if added or not?
+          // "modify" loop: "data.filter...forEach(e => { ... modify(...) })"
+          // Yes, it recurses even if not added to result?
+          // "if (this.findInDoubleArray...) { add } ... modify()"
+          // So we MUST recurse.
+          stack.push({ parentId: child.stepId, level: level + 1 });
+        }
+      }
+
+      // Re-sort the current level (original logic did this oddly, but maybe we just ensure sorting once at the end?)
+      // Original logic sorted result[level-1]'s children.
+      // Since we add children in sorted order (from filter/sort above), result[level] should be roughly sorted.
+      // But multiple parents might contribute to the same level.
+      // Let's sort the level after we are done?
+    }
+
+    // Final pass to ensure every level is sorted by branchPath (merging branches from diff parents)
+    result.forEach((level) => {
+      level.sort((a, b) => a.branchPath - b.branchPath);
+    });
+
     return result;
   }
 
@@ -81,79 +109,100 @@ export class DagManagerService<T extends DagModelItem> {
   removeItem(
     idToRemove: number,
     flatArray: Array<T>,
+    // isChildOfDeletedBranch is no longer needed in the public signature but was part of recursion.
+    // We can keep the signature for compatibility or remove it if not public API (it is public in class).
+    // The implementation will ignore it or use internal queue state.
     isChildOfDeletedBranch = false
   ): Array<T> {
-    const children: Array<T> = flatArray.filter((item: T) =>
-      item.parentIds.includes(idToRemove)
-    );
-    const childBranchPath1: T = children.find((i) => i.branchPath === 1);
-    const childrenNotBranchPath1: Array<T> = children.filter(
-      (i) => i.branchPath > 1
-    );
-    const itemToRemove: T = flatArray.find((i) => i.stepId === idToRemove);
+    // QueueItem: { id: number, isChildOfDeletedBranch: boolean }
+    const queue = [{ id: idToRemove, isChildOfDeletedBranch }];
 
-    // Work with a shallow copy of the array for updates
-    let nextFlatArray = [...flatArray];
+    // We need to mutate the array as we go, but we want to return a new array at the end.
+    // Since we already refactored to be immutable *per step*, doing it iteratively
+    // means we can just keep updating a local 'currentFlatArray'.
+    let currentFlatArray = [...flatArray];
+    const idsToRemove = new Set<number>();
 
-    // if the item that will be removed has multiple children, we have to figure out which to keep and which to delete
-    if (children.length > 1) {
-      // keep descendants of children.branchPath = 1 if it exists
-      if (childBranchPath1) {
-        const newChild = { ...childBranchPath1 };
-        // Set child.branchPath === 1 to itemToRemove.branchPath
-        newChild.branchPath = itemToRemove.branchPath;
-        // set child.branchPath === 1.parentIds = itemToRemove.parentIds
-        if (newChild.parentIds.length === 1) {
-          newChild.parentIds = [...itemToRemove.parentIds];
-        } else {
-          newChild.parentIds = newChild.parentIds.filter(
-            (i) => i !== idToRemove
-          );
-        }
+    while (queue.length > 0) {
+      const { id, isChildOfDeletedBranch: childOfDeleted } = queue.shift();
 
-        // Update the array with the modified child
-        nextFlatArray = nextFlatArray.map((i) =>
-          i.stepId === newChild.stepId ? newChild : i
-        );
-      }
+      // If we already processed this ID, skip to avoid cycles/redundancy
+      if (idsToRemove.has(id)) continue;
 
-      // remove descendants of children.branchPath > 1;
-      for (const childToBeRemoved of childrenNotBranchPath1) {
-        nextFlatArray = this.removeItem(
-          childToBeRemoved.stepId,
-          nextFlatArray,
-          true
-        );
-      }
-    } else if (children.length === 1) {
-      // if the lone child has only one parent, then just go ahead and remove that item
-      if (children[0].parentIds.length === 1) {
-        if (isChildOfDeletedBranch) {
-          nextFlatArray = this.removeItem(
-            children[0].stepId,
-            nextFlatArray,
-            isChildOfDeletedBranch
-          );
-        } else {
-          const newChild = { ...children[0] };
-          newChild.parentIds = [...itemToRemove.parentIds];
+      const itemToRemove = currentFlatArray.find((i) => i.stepId === id);
+      if (!itemToRemove) continue;
+
+      // Identify children
+      const children = currentFlatArray.filter((item) =>
+        item.parentIds.includes(id)
+      );
+
+      // Logic from original recursion:
+
+      const childBranchPath1 = children.find((i) => i.branchPath === 1);
+      const childrenNotBranchPath1 = children.filter((i) => i.branchPath > 1);
+
+      if (children.length > 1) {
+        // 1. Keep descendants of childBranchPath1
+        if (childBranchPath1) {
+          // We need to update this child, effectively "moving it up"
+          // We can update currentFlatArray immediately.
+          const newChild = { ...childBranchPath1 };
           newChild.branchPath = itemToRemove.branchPath;
-          nextFlatArray = nextFlatArray.map((i) =>
+
+          if (newChild.parentIds.length === 1) {
+            newChild.parentIds = [...itemToRemove.parentIds];
+          } else {
+            newChild.parentIds = newChild.parentIds.filter((pid) => pid !== id);
+          }
+
+          // Apply update
+          currentFlatArray = currentFlatArray.map((i) =>
             i.stepId === newChild.stepId ? newChild : i
           );
         }
+
+        // 2. Remove other children recursively -> add to queue
+        for (const child of childrenNotBranchPath1) {
+          queue.push({ id: child.stepId, isChildOfDeletedBranch: true });
+        }
+
+        // Mark current item for deletion
+        idsToRemove.add(id);
+      } else if (children.length === 1) {
+        const onlyChild = children[0];
+
+        if (onlyChild.parentIds.length === 1) {
+          if (childOfDeleted) {
+            // If parent is being deleted and this is the only child of a deleted branch, delete this too
+            queue.push({ id: onlyChild.stepId, isChildOfDeletedBranch: true });
+          } else {
+            // Move up
+            const newChild = { ...onlyChild };
+            newChild.parentIds = [...itemToRemove.parentIds];
+            newChild.branchPath = itemToRemove.branchPath;
+            currentFlatArray = currentFlatArray.map((i) =>
+              i.stepId === newChild.stepId ? newChild : i
+            );
+          }
+        } else {
+          // Child has other parents (merging paths), just remove the relationship to this deleted parent
+          const newChild = { ...onlyChild };
+          newChild.parentIds = newChild.parentIds.filter((pid) => pid !== id);
+          currentFlatArray = currentFlatArray.map((i) =>
+            i.stepId === newChild.stepId ? newChild : i
+          );
+        }
+
+        idsToRemove.add(id);
       } else {
-        // if the lone child has more than one parent id, then remove the item which is being removed from the parentIds array
-        const newChild = { ...children[0] };
-        newChild.parentIds = newChild.parentIds.filter((i) => i !== idToRemove);
-        nextFlatArray = nextFlatArray.map((i) =>
-          i.stepId === newChild.stepId ? newChild : i
-        );
+        // No children, just remove
+        idsToRemove.add(id);
       }
     }
 
-    // Remove the item itself
-    return nextFlatArray.filter((i) => i.stepId !== idToRemove);
+    // Final pass to remove all marked IDs
+    return currentFlatArray.filter((i) => !idsToRemove.has(i.stepId));
   }
 
   createChildrenItems(
@@ -235,19 +284,42 @@ export class DagManagerService<T extends DagModelItem> {
   }
 
   getNodeDepth(stepId: number, items: Array<T>): number {
-    const item: T = items.find((i) => i.stepId === stepId);
-    let depth = 0;
+    const item = items.find((i) => i.stepId === stepId);
+    if (!item) return 0;
 
-    if (!item.parentIds.includes(0)) {
-      const allDepths: number[] = [];
-      for (const itemParentId of item.parentIds) {
-        depth = 1 + this.getNodeDepth(itemParentId, items);
-        allDepths.push(depth);
+    // Iterative Max Depth calculation
+    // Queue structure: { id: number, depth: number }
+    // Since we are looking for depth from root, and edges are child->parentIds,
+    // we can traverse UPWARDS to roots.
+    // Length of longest path to a root (0).
+
+    const stack = [{ id: stepId, depth: 0 }];
+    let maxDepth = 0;
+
+    while (stack.length > 0) {
+      const current = stack.pop();
+      const currentItem = items.find((i) => i.stepId === current.id);
+
+      if (!currentItem) continue;
+
+      if (currentItem.parentIds.includes(0)) {
+        // Reached a root
+        if (current.depth > maxDepth) maxDepth = current.depth;
+        continue;
       }
-      depth = allDepths.sort((x, y) => (x - y ? 1 : -1))[0];
+
+      if (currentItem.parentIds.length === 0) {
+        // No parents, effectively a root? Treat as root.
+        if (current.depth > maxDepth) maxDepth = current.depth;
+        continue;
+      }
+
+      for (const pid of currentItem.parentIds) {
+        stack.push({ id: pid, depth: current.depth + 1 });
+      }
     }
 
-    return depth;
+    return maxDepth;
   }
 
   canAddRelation(childId: number, parentId: number, items: Array<T>) {
