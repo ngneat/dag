@@ -7,9 +7,8 @@ export class DagManagerService<T extends DagModelItem> {
   private dagModelBs: BehaviorSubject<Array<Array<T>>> = new BehaviorSubject<
     Array<Array<T>>
   >(null);
-  public dagModel$: Observable<
-    Array<Array<T>>
-  > = this.dagModelBs.asObservable();
+  public dagModel$: Observable<Array<Array<T>>> =
+    this.dagModelBs.asObservable();
   private nextStepNumber: number;
 
   setNextNumber(num: number) {
@@ -30,8 +29,7 @@ export class DagManagerService<T extends DagModelItem> {
   }
 
   convertDagModelToSingleArray(arr: Array<Array<T>>): Array<T> {
-    // eslint-disable-next-line
-    return [].concat.apply([], arr);
+    return arr.flat();
   }
 
   convertArrayToDagModel(itemsArray: Array<T>): Array<Array<T>> {
@@ -94,55 +92,68 @@ export class DagManagerService<T extends DagModelItem> {
     );
     const itemToRemove: T = flatArray.find((i) => i.stepId === idToRemove);
 
+    // Work with a shallow copy of the array for updates
+    let nextFlatArray = [...flatArray];
+
     // if the item that will be removed has multiple children, we have to figure out which to keep and which to delete
     if (children.length > 1) {
       // keep descendants of children.branchPath = 1 if it exists
       if (childBranchPath1) {
+        const newChild = { ...childBranchPath1 };
         // Set child.branchPath === 1 to itemToRemove.branchPath
-        childBranchPath1.branchPath = itemToRemove.branchPath;
+        newChild.branchPath = itemToRemove.branchPath;
         // set child.branchPath === 1.parentIds = itemToRemove.parentIds
-        if (childBranchPath1.parentIds.length === 1) {
-          childBranchPath1.parentIds = [...itemToRemove.parentIds];
+        if (newChild.parentIds.length === 1) {
+          newChild.parentIds = [...itemToRemove.parentIds];
         } else {
-          const idxToRemove = childBranchPath1.parentIds.findIndex(
-            (i) => i === idToRemove
+          newChild.parentIds = newChild.parentIds.filter(
+            (i) => i !== idToRemove
           );
-          childBranchPath1.parentIds.splice(idxToRemove, 1);
         }
+
+        // Update the array with the modified child
+        nextFlatArray = nextFlatArray.map((i) =>
+          i.stepId === newChild.stepId ? newChild : i
+        );
       }
 
       // remove descendants of children.branchPath > 1;
       for (const childToBeRemoved of childrenNotBranchPath1) {
-        flatArray = this.removeItem(childToBeRemoved.stepId, flatArray, true);
+        nextFlatArray = this.removeItem(
+          childToBeRemoved.stepId,
+          nextFlatArray,
+          true
+        );
       }
     } else if (children.length === 1) {
       // if the lone child has only one parent, then just go ahead and remove that item
       if (children[0].parentIds.length === 1) {
         if (isChildOfDeletedBranch) {
-          flatArray = this.removeItem(
+          nextFlatArray = this.removeItem(
             children[0].stepId,
-            flatArray,
+            nextFlatArray,
             isChildOfDeletedBranch
           );
         } else {
-          children[0].parentIds = [...itemToRemove.parentIds];
-          children[0].branchPath = itemToRemove.branchPath;
+          const newChild = { ...children[0] };
+          newChild.parentIds = [...itemToRemove.parentIds];
+          newChild.branchPath = itemToRemove.branchPath;
+          nextFlatArray = nextFlatArray.map((i) =>
+            i.stepId === newChild.stepId ? newChild : i
+          );
         }
       } else {
         // if the lone child has more than one parent id, then remove the item which is being removed from the parentIds array
-        const idxToRemove = children[0].parentIds.findIndex(
-          (i) => i === idToRemove
+        const newChild = { ...children[0] };
+        newChild.parentIds = newChild.parentIds.filter((i) => i !== idToRemove);
+        nextFlatArray = nextFlatArray.map((i) =>
+          i.stepId === newChild.stepId ? newChild : i
         );
-        children[0].parentIds.splice(idxToRemove, 1);
       }
     }
 
-    const itemToRemoveIdx: number = flatArray.findIndex(
-      (i) => i.stepId === idToRemove
-    );
-    flatArray.splice(itemToRemoveIdx, 1);
-
-    return flatArray;
+    // Remove the item itself
+    return nextFlatArray.filter((i) => i.stepId !== idToRemove);
   }
 
   createChildrenItems(
@@ -388,8 +399,10 @@ export class DagManagerService<T extends DagModelItem> {
 
     if (canAddRelation) {
       const idx: number = items.findIndex((i: T) => i.stepId === childId);
-      items[idx].parentIds.push(parentId);
-      return [...items];
+      const updatedChild = { ...items[idx] };
+      updatedChild.parentIds = [...updatedChild.parentIds, parentId];
+
+      return items.map((i, index) => (index === idx ? updatedChild : i));
     } else {
       console.error(
         `DagManagerService error: Cannot add parent ID ${parentId} to child ${childId}`
@@ -412,18 +425,25 @@ export class DagManagerService<T extends DagModelItem> {
 
   insertNode(idOfNodeThatMoves: number, newNode: T): Array<T> {
     const items = this.getSingleDimensionalArrayFromModel();
-    newNode.stepId = this.nextStepNumber++;
+    const nodeToAdd = { ...newNode, stepId: this.nextStepNumber++ };
 
-    const itemToReplace = items.find((i: T) => i.stepId === idOfNodeThatMoves);
+    const itemToReplaceIndex = items.findIndex(
+      (i: T) => i.stepId === idOfNodeThatMoves
+    );
+    const itemToReplace = { ...items[itemToReplaceIndex] };
 
-    newNode.branchPath = itemToReplace.branchPath;
-    newNode.parentIds = [...itemToReplace.parentIds];
-    itemToReplace.parentIds = [newNode.stepId];
+    nodeToAdd.branchPath = itemToReplace.branchPath;
+    nodeToAdd.parentIds = [...itemToReplace.parentIds];
+
+    itemToReplace.parentIds = [nodeToAdd.stepId];
     itemToReplace.branchPath = 1;
 
-    items.push(newNode);
+    // Return new array with replacements
+    const newItems = [...items];
+    newItems[itemToReplaceIndex] = itemToReplace;
+    newItems.push(nodeToAdd);
 
-    return items;
+    return newItems;
   }
 
   insertNewNode(idOfNodeToReplace: number, newNode: T): void {
